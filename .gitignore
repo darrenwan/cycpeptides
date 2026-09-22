@@ -8,8 +8,9 @@ dist/
 build/
 .python-version
 
-# Editor / OS noise
-.cursor/
+# Editor / OS noise (keep Bugbot project rules trackable)
+.cursor/*
+!.cursor/BUGBOT.md
 .claude/
 .DS_Store
 *.swp
