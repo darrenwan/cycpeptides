@@ -1,0 +1,900 @@
+{
+  "accessed": "2026-09-22",
+  "method": {
+    "contact_cutoff_A": 4.5,
+    "macrocycle_structures": 5,
+    "antibody_structures": 3,
+    "pd1_structure": "4ZQK",
+    "ligand_atoms": "polymer + non-water HETATM (ncAA)",
+    "core_score": "3*macro_frac + 2*pd1_hit + min(density/20,1.5) + 0.5*ab_frac",
+    "tier_override": "macro>=3 & PD-1 pairs>=15 -> core_required"
+  },
+  "rfdiffusion_recommended": {
+    "tier1_string": [
+      "A56",
+      "A123",
+      "A115",
+      "A113",
+      "A66",
+      "A121"
+    ],
+    "rationale": "consensus \u2229 PD-1; Tyr123 by density; capped at 6"
+  },
+  "tiers": {
+    "core_required": [
+      {
+        "res": 56,
+        "aa": "TYR",
+        "score": 7.0,
+        "macro_n": 5,
+        "pd1_pairs": 18
+      },
+      {
+        "res": 113,
+        "aa": "ARG",
+        "score": 6.96,
+        "macro_n": 5,
+        "pd1_pairs": 17
+      },
+      {
+        "res": 66,
+        "aa": "GLN",
+        "score": 6.833,
+        "macro_n": 5,
+        "pd1_pairs": 23
+      },
+      {
+        "res": 123,
+        "aa": "TYR",
+        "score": 6.55,
+        "macro_n": 5,
+        "pd1_pairs": 55
+      },
+      {
+        "res": 115,
+        "aa": "MET",
+        "score": 6.37,
+        "macro_n": 5,
+        "pd1_pairs": 9
+      },
+      {
+        "res": 58,
+        "aa": "GLU",
+        "score": 5.94,
+        "macro_n": 5,
+        "pd1_pairs": 2
+      },
+      {
+        "res": 54,
+        "aa": "ILE",
+        "score": 5.673,
+        "macro_n": 5,
+        "pd1_pairs": 4
+      },
+      {
+        "res": 76,
+        "aa": "VAL",
+        "score": 5.617,
+        "macro_n": 5,
+        "pd1_pairs": 1
+      },
+      {
+        "res": 121,
+        "aa": "ALA",
+        "score": 5.088,
+        "macro_n": 4,
+        "pd1_pairs": 15
+      }
+    ],
+    "core_strong": [
+      {
+        "res": 117,
+        "aa": "SER",
+        "score": 4.333,
+        "macro_n": 3,
+        "pd1_pairs": 4
+      }
+    ],
+    "differentiation_candidates": [
+      {
+        "res": 125,
+        "aa": "ARG",
+        "tier": "pd1_gap_opportunity",
+        "macro_n": 1,
+        "pd1_pairs": 16,
+        "ab_n": 3
+      },
+      {
+        "res": 124,
+        "aa": "LYS",
+        "tier": "pd1_gap_opportunity",
+        "macro_n": 1,
+        "pd1_pairs": 27,
+        "ab_n": 1
+      },
+      {
+        "res": 26,
+        "aa": "ASP",
+        "tier": "pd1_gap_opportunity",
+        "macro_n": 0,
+        "pd1_pairs": 7,
+        "ab_n": 1
+      },
+      {
+        "res": 19,
+        "aa": "PHE",
+        "tier": "pd1_gap_opportunity",
+        "macro_n": 0,
+        "pd1_pairs": 7,
+        "ab_n": 0
+      }
+    ]
+  },
+  "top20_by_core_score": [
+    {
+      "resnum": 56,
+      "aa": "TYR",
+      "label": "TYR56",
+      "macro_n_structures": 5,
+      "macro_fraction": 1.0,
+      "macro_atom_pairs_sum": 165,
+      "macro_mean_pairs_when_hit": 33.0,
+      "pd1_atom_pairs": 18,
+      "pd1_contact": true,
+      "antibody_n_structures": 3,
+      "antibody_atom_pairs_sum": 48,
+      "core_score": 7.0,
+      "flag_pd1_gap": false,
+      "flag_ab_heavy_macro_light": false,
+      "tier": "core_required"
+    },
+    {
+      "resnum": 113,
+      "aa": "ARG",
+      "label": "ARG113",
+      "macro_n_structures": 5,
+      "macro_fraction": 1.0,
+      "macro_atom_pairs_sum": 146,
+      "macro_mean_pairs_when_hit": 29.2,
+      "pd1_atom_pairs": 17,
+      "pd1_contact": true,
+      "antibody_n_structures": 3,
+      "antibody_atom_pairs_sum": 84,
+      "core_score": 6.96,
+      "flag_pd1_gap": false,
+      "flag_ab_heavy_macro_light": false,
+      "tier": "core_required"
+    },
+    {
+      "resnum": 66,
+      "aa": "GLN",
+      "label": "GLN66",
+      "macro_n_structures": 5,
+      "macro_fraction": 1.0,
+      "macro_atom_pairs_sum": 212,
+      "macro_mean_pairs_when_hit": 42.4,
+      "pd1_atom_pairs": 23,
+      "pd1_contact": true,
+      "antibody_n_structures": 2,
+      "antibody_atom_pairs_sum": 26,
+      "core_score": 6.833,
+      "flag_pd1_gap": false,
+      "flag_ab_heavy_macro_light": false,
+      "tier": "core_required"
+    },
+    {
+      "resnum": 123,
+      "aa": "TYR",
+      "label": "TYR123",
+      "macro_n_structures": 5,
+      "macro_fraction": 1.0,
+      "macro_atom_pairs_sum": 105,
+      "macro_mean_pairs_when_hit": 21.0,
+      "pd1_atom_pairs": 55,
+      "pd1_contact": true,
+      "antibody_n_structures": 3,
+      "antibody_atom_pairs_sum": 73,
+      "core_score": 6.55,
+      "flag_pd1_gap": false,
+      "flag_ab_heavy_macro_light": false,
+      "tier": "core_required"
+    },
+    {
+      "resnum": 115,
+      "aa": "MET",
+      "label": "MET115",
+      "macro_n_structures": 5,
+      "macro_fraction": 1.0,
+      "macro_atom_pairs_sum": 87,
+      "macro_mean_pairs_when_hit": 17.4,
+      "pd1_atom_pairs": 9,
+      "pd1_contact": true,
+      "antibody_n_structures": 3,
+      "antibody_atom_pairs_sum": 38,
+      "core_score": 6.37,
+      "flag_pd1_gap": false,
+      "flag_ab_heavy_macro_light": false,
+      "tier": "core_required"
+    },
+    {
+      "resnum": 58,
+      "aa": "GLU",
+      "label": "GLU58",
+      "macro_n_structures": 5,
+      "macro_fraction": 1.0,
+      "macro_atom_pairs_sum": 44,
+      "macro_mean_pairs_when_hit": 8.8,
+      "pd1_atom_pairs": 2,
+      "pd1_contact": true,
+      "antibody_n_structures": 3,
+      "antibody_atom_pairs_sum": 69,
+      "core_score": 5.94,
+      "flag_pd1_gap": false,
+      "flag_ab_heavy_macro_light": false,
+      "tier": "core_required"
+    },
+    {
+      "resnum": 54,
+      "aa": "ILE",
+      "label": "ILE54",
+      "macro_n_structures": 5,
+      "macro_fraction": 1.0,
+      "macro_atom_pairs_sum": 34,
+      "macro_mean_pairs_when_hit": 6.8,
+      "pd1_atom_pairs": 4,
+      "pd1_contact": true,
+      "antibody_n_structures": 2,
+      "antibody_atom_pairs_sum": 12,
+      "core_score": 5.673,
+      "flag_pd1_gap": false,
+      "flag_ab_heavy_macro_light": false,
+      "tier": "core_required"
+    },
+    {
+      "resnum": 76,
+      "aa": "VAL",
+      "label": "VAL76",
+      "macro_n_structures": 5,
+      "macro_fraction": 1.0,
+      "macro_atom_pairs_sum": 45,
+      "macro_mean_pairs_when_hit": 9.0,
+      "pd1_atom_pairs": 1,
+      "pd1_contact": true,
+      "antibody_n_structures": 1,
+      "antibody_atom_pairs_sum": 13,
+      "core_score": 5.617,
+      "flag_pd1_gap": false,
+      "flag_ab_heavy_macro_light": false,
+      "tier": "core_required"
+    },
+    {
+      "resnum": 121,
+      "aa": "ALA",
+      "label": "ALA121",
+      "macro_n_structures": 4,
+      "macro_fraction": 0.8,
+      "macro_atom_pairs_sum": 15,
+      "macro_mean_pairs_when_hit": 3.75,
+      "pd1_atom_pairs": 15,
+      "pd1_contact": true,
+      "antibody_n_structures": 3,
+      "antibody_atom_pairs_sum": 29,
+      "core_score": 5.088,
+      "flag_pd1_gap": false,
+      "flag_ab_heavy_macro_light": false,
+      "tier": "core_required"
+    },
+    {
+      "resnum": 117,
+      "aa": "SER",
+      "label": "SER117",
+      "macro_n_structures": 3,
+      "macro_fraction": 0.6,
+      "macro_atom_pairs_sum": 12,
+      "macro_mean_pairs_when_hit": 4.0,
+      "pd1_atom_pairs": 4,
+      "pd1_contact": true,
+      "antibody_n_structures": 2,
+      "antibody_atom_pairs_sum": 8,
+      "core_score": 4.333,
+      "flag_pd1_gap": false,
+      "flag_ab_heavy_macro_light": false,
+      "tier": "core_strong"
+    },
+    {
+      "resnum": 122,
+      "aa": "ASP",
+      "label": "ASP122",
+      "macro_n_structures": 2,
+      "macro_fraction": 0.4,
+      "macro_atom_pairs_sum": 21,
+      "macro_mean_pairs_when_hit": 10.5,
+      "pd1_atom_pairs": 19,
+      "pd1_contact": true,
+      "antibody_n_structures": 2,
+      "antibody_atom_pairs_sum": 10,
+      "core_score": 4.058,
+      "flag_pd1_gap": true,
+      "flag_ab_heavy_macro_light": true,
+      "tier": "extended"
+    },
+    {
+      "resnum": 125,
+      "aa": "ARG",
+      "label": "ARG125",
+      "macro_n_structures": 1,
+      "macro_fraction": 0.2,
+      "macro_atom_pairs_sum": 11,
+      "macro_mean_pairs_when_hit": 11.0,
+      "pd1_atom_pairs": 16,
+      "pd1_contact": true,
+      "antibody_n_structures": 3,
+      "antibody_atom_pairs_sum": 71,
+      "core_score": 3.65,
+      "flag_pd1_gap": true,
+      "flag_ab_heavy_macro_light": true,
+      "tier": "pd1_gap_opportunity"
+    },
+    {
+      "resnum": 63,
+      "aa": "ASN",
+      "label": "ASN63",
+      "macro_n_structures": 4,
+      "macro_fraction": 0.8,
+      "macro_atom_pairs_sum": 50,
+      "macro_mean_pairs_when_hit": 12.5,
+      "pd1_atom_pairs": 0,
+      "pd1_contact": false,
+      "antibody_n_structures": 2,
+      "antibody_atom_pairs_sum": 23,
+      "core_score": 3.358,
+      "flag_pd1_gap": false,
+      "flag_ab_heavy_macro_light": false,
+      "tier": "extended"
+    },
+    {
+      "resnum": 73,
+      "aa": "ASP",
+      "label": "ASP73",
+      "macro_n_structures": 4,
+      "macro_fraction": 0.8,
+      "macro_atom_pairs_sum": 59,
+      "macro_mean_pairs_when_hit": 14.75,
+      "pd1_atom_pairs": 0,
+      "pd1_contact": false,
+      "antibody_n_structures": 1,
+      "antibody_atom_pairs_sum": 2,
+      "core_score": 3.304,
+      "flag_pd1_gap": false,
+      "flag_ab_heavy_macro_light": false,
+      "tier": "extended"
+    },
+    {
+      "resnum": 68,
+      "aa": "VAL",
+      "label": "VAL68",
+      "macro_n_structures": 4,
+      "macro_fraction": 0.8,
+      "macro_atom_pairs_sum": 48,
+      "macro_mean_pairs_when_hit": 12.0,
+      "pd1_atom_pairs": 0,
+      "pd1_contact": false,
+      "antibody_n_structures": 1,
+      "antibody_atom_pairs_sum": 10,
+      "core_score": 3.167,
+      "flag_pd1_gap": false,
+      "flag_ab_heavy_macro_light": false,
+      "tier": "extended"
+    },
+    {
+      "resnum": 124,
+      "aa": "LYS",
+      "label": "LYS124",
+      "macro_n_structures": 1,
+      "macro_fraction": 0.2,
+      "macro_atom_pairs_sum": 3,
+      "macro_mean_pairs_when_hit": 3.0,
+      "pd1_atom_pairs": 27,
+      "pd1_contact": true,
+      "antibody_n_structures": 1,
+      "antibody_atom_pairs_sum": 9,
+      "core_score": 2.917,
+      "flag_pd1_gap": true,
+      "flag_ab_heavy_macro_light": false,
+      "tier": "pd1_gap_opportunity"
+    },
+    {
+      "resnum": 23,
+      "aa": "VAL",
+      "label": "VAL23",
+      "macro_n_structures": 0,
+      "macro_fraction": 0.0,
+      "macro_atom_pairs_sum": 0,
+      "macro_mean_pairs_when_hit": 0.0,
+      "pd1_atom_pairs": 1,
+      "pd1_contact": true,
+      "antibody_n_structures": 1,
+      "antibody_atom_pairs_sum": 1,
+      "core_score": 2.167,
+      "flag_pd1_gap": true,
+      "flag_ab_heavy_macro_light": false,
+      "tier": "peripheral"
+    },
+    {
+      "resnum": 26,
+      "aa": "ASP",
+      "label": "ASP26",
+      "macro_n_structures": 0,
+      "macro_fraction": 0.0,
+      "macro_atom_pairs_sum": 0,
+      "macro_mean_pairs_when_hit": 0.0,
+      "pd1_atom_pairs": 7,
+      "pd1_contact": true,
+      "antibody_n_structures": 1,
+      "antibody_atom_pairs_sum": 25,
+      "core_score": 2.167,
+      "flag_pd1_gap": true,
+      "flag_ab_heavy_macro_light": false,
+      "tier": "pd1_gap_opportunity"
+    },
+    {
+      "resnum": 119,
+      "aa": "GLY",
+      "label": "GLY119",
+      "macro_n_structures": 0,
+      "macro_fraction": 0.0,
+      "macro_atom_pairs_sum": 0,
+      "macro_mean_pairs_when_hit": 0.0,
+      "pd1_atom_pairs": 2,
+      "pd1_contact": true,
+      "antibody_n_structures": 1,
+      "antibody_atom_pairs_sum": 21,
+      "core_score": 2.167,
+      "flag_pd1_gap": true,
+      "flag_ab_heavy_macro_light": false,
+      "tier": "peripheral"
+    },
+    {
+      "resnum": 120,
+      "aa": "GLY",
+      "label": "GLY120",
+      "macro_n_structures": 0,
+      "macro_fraction": 0.0,
+      "macro_atom_pairs_sum": 0,
+      "macro_mean_pairs_when_hit": 0.0,
+      "pd1_atom_pairs": 3,
+      "pd1_contact": true,
+      "antibody_n_structures": 1,
+      "antibody_atom_pairs_sum": 7,
+      "core_score": 2.167,
+      "flag_pd1_gap": true,
+      "flag_ab_heavy_macro_light": false,
+      "tier": "peripheral"
+    }
+  ],
+  "per_complex_summary": {
+    "7OUN:peptide-104": {
+      "class": "macrocycle",
+      "n_contact_residues": 12,
+      "total_atom_pairs": 140,
+      "top_contacts": [
+        [
+          123,
+          35
+        ],
+        [
+          56,
+          20
+        ],
+        [
+          113,
+          17
+        ],
+        [
+          115,
+          17
+        ],
+        [
+          66,
+          14
+        ],
+        [
+          122,
+          12
+        ],
+        [
+          121,
+          7
+        ],
+        [
+          58,
+          5
+        ],
+        [
+          117,
+          4
+        ],
+        [
+          54,
+          3
+        ]
+      ]
+    },
+    "5O45:peptide-57": {
+      "class": "macrocycle",
+      "n_contact_residues": 17,
+      "total_atom_pairs": 216,
+      "top_contacts": [
+        [
+          56,
+          39
+        ],
+        [
+          58,
+          29
+        ],
+        [
+          115,
+          29
+        ],
+        [
+          123,
+          24
+        ],
+        [
+          61,
+          17
+        ],
+        [
+          66,
+          16
+        ],
+        [
+          54,
+          10
+        ],
+        [
+          63,
+          9
+        ],
+        [
+          122,
+          9
+        ],
+        [
+          116,
+          8
+        ]
+      ]
+    },
+    "8ALX:pAC65": {
+      "class": "macrocycle",
+      "n_contact_residues": 18,
+      "total_atom_pairs": 291,
+      "top_contacts": [
+        [
+          66,
+          61
+        ],
+        [
+          113,
+          50
+        ],
+        [
+          56,
+          39
+        ],
+        [
+          123,
+          21
+        ],
+        [
+          73,
+          17
+        ],
+        [
+          115,
+          17
+        ],
+        [
+          68,
+          16
+        ],
+        [
+          76,
+          16
+        ],
+        [
+          63,
+          13
+        ],
+        [
+          125,
+          11
+        ]
+      ]
+    },
+    "6PV9:macrocycle_6PV9": {
+      "class": "macrocycle",
+      "n_contact_residues": 15,
+      "total_atom_pairs": 244,
+      "top_contacts": [
+        [
+          66,
+          62
+        ],
+        [
+          113,
+          37
+        ],
+        [
+          56,
+          33
+        ],
+        [
+          73,
+          22
+        ],
+        [
+          68,
+          15
+        ],
+        [
+          123,
+          13
+        ],
+        [
+          63,
+          12
+        ],
+        [
+          76,
+          12
+        ],
+        [
+          71,
+          11
+        ],
+        [
+          115,
+          11
+        ]
+      ]
+    },
+    "4ZQK:PD-1": {
+      "class": "pd1",
+      "n_contact_residues": 18,
+      "total_atom_pairs": 230,
+      "top_contacts": [
+        [
+          123,
+          55
+        ],
+        [
+          124,
+          27
+        ],
+        [
+          66,
+          23
+        ],
+        [
+          122,
+          19
+        ],
+        [
+          56,
+          18
+        ],
+        [
+          113,
+          17
+        ],
+        [
+          125,
+          16
+        ],
+        [
+          121,
+          15
+        ],
+        [
+          115,
+          9
+        ],
+        [
+          19,
+          7
+        ]
+      ]
+    },
+    "5XXY:atezolizumab": {
+      "class": "antibody",
+      "n_contact_residues": 27,
+      "total_atom_pairs": 357,
+      "top_contacts": [
+        [
+          123,
+          38
+        ],
+        [
+          58,
+          35
+        ],
+        [
+          113,
+          30
+        ],
+        [
+          125,
+          26
+        ],
+        [
+          121,
+          25
+        ],
+        [
+          119,
+          21
+        ],
+        [
+          52,
+          18
+        ],
+        [
+          115,
+          17
+        ],
+        [
+          61,
+          15
+        ],
+        [
+          66,
+          15
+        ]
+      ]
+    },
+    "5GRJ:avelumab": {
+      "class": "antibody",
+      "n_contact_residues": 20,
+      "total_atom_pairs": 305,
+      "top_contacts": [
+        [
+          61,
+          89
+        ],
+        [
+          60,
+          41
+        ],
+        [
+          56,
+          29
+        ],
+        [
+          58,
+          21
+        ],
+        [
+          62,
+          20
+        ],
+        [
+          113,
+          15
+        ],
+        [
+          63,
+          14
+        ],
+        [
+          76,
+          13
+        ],
+        [
+          66,
+          11
+        ],
+        [
+          115,
+          11
+        ]
+      ]
+    },
+    "5X8M:durvalumab": {
+      "class": "antibody",
+      "n_contact_residues": 17,
+      "total_atom_pairs": 254,
+      "top_contacts": [
+        [
+          125,
+          43
+        ],
+        [
+          60,
+          42
+        ],
+        [
+          113,
+          39
+        ],
+        [
+          123,
+          27
+        ],
+        [
+          26,
+          25
+        ],
+        [
+          58,
+          13
+        ],
+        [
+          111,
+          12
+        ],
+        [
+          61,
+          10
+        ],
+        [
+          115,
+          10
+        ],
+        [
+          124,
+          9
+        ]
+      ]
+    },
+    "5O4Y:peptide-71_consensus": {
+      "class": "macrocycle",
+      "n_contact_residues": 13,
+      "total_atom_pairs": 228,
+      "top_contacts": [
+        [
+          66,
+          59
+        ],
+        [
+          113,
+          38
+        ],
+        [
+          56,
+          34
+        ],
+        [
+          73,
+          19
+        ],
+        [
+          63,
+          16
+        ],
+        [
+          68,
+          14
+        ],
+        [
+          76,
+          13
+        ],
+        [
+          115,
+          13
+        ],
+        [
+          123,
+          12
+        ],
+        [
+          54,
+          5
+        ]
+      ]
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "accessed": "2026-09-22",
+  "target": "PD-L1 macrocyclic peptide",
+  "project_note": "Literature index for dry-lab design only; wet-lab findings cited as prior art / method evidence, not campaign deliverables.",
+  "sources": [
+    {
+      "pdb": "7OUN",
+      "title": "Structural Characterization of a Macrocyclic Peptide Modulator of the PD-1/PD-L1 Axis (peptide 104)",
+      "doi": "10.3390/molecules26164848",
+      "pmid": "34443436"
+    },
+    {
+      "pdb": "5O45",
+      "title": "Bioactive Macrocyclic Inhibitors of the PD-1/PD-L1 Immune Checkpoint",
+      "note": "ncAA-rich macrocycle co-crystal"
+    },
+    {
+      "pdb": "6PV9",
+      "title": "Protein Footprinting and X-ray Crystallography Reveal Interaction of PD-L1 and a Macrocyclic Peptide",
+      "pmc": "PMC7485629"
+    },
+    {
+      "pdb": "4ZQK",
+      "title": "Structure of the complex of human PD-1 and PD-L1",
+      "note": "native footprint for blockade design"
+    },
+    {
+      "title": "Complex peptide macrocycle optimization (BMS-986189 / BMT-174900 retrospective)",
+      "doi": "10.1007/s10822-023-00524-2"
+    },
+    {
+      "title": "RFpeptides: Accurate de novo design of high-affinity protein-binding macrocycles",
+      "doi": "10.1038/s41589-025-01929-w"
+    }
+  ]
+}

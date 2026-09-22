@@ -1,0 +1,48 @@
+version: v1
+accessed: '2026-09-22'
+contact_cutoff_A: 4.5
+primary_gate:
+  metric: pd1_jaccard
+  T_pd1_jaccard: 0.15
+  rule: pass if pd1_jaccard >= T_pd1_jaccard
+rim:
+  mode: soft_score_plus_quota
+  residues:
+  - A122
+  - A124
+  - A125
+  weights:
+    A122: 1.0
+    A124: 1.2
+    A125: 1.0
+  forbid_require_all_three: true
+  note: Use rim_score for ranking/quota only
+diversity:
+  rmsd_vs_8alx_bins_A:
+  - 0.0
+  - 2.0
+  - 4.0
+  - 6.0
+  - 999.0
+  high_rmsd_quota_frac: 0.3
+  high_rim_quota_frac: 0.3
+  top_composite_frac: 0.4
+structure:
+  peptide_ca_rmsd_max_A: 2.0
+  note: Applied after structure prediction (S2+); not from crystal calib
+calibration_stats:
+  T_pd1_jaccard: 0.15
+  min_positive_jaccard: 0.2917
+  max_negative_jaccard: 0.0
+  positive_pass_rate: 1.0
+  negative_fail_rate: 1.0
+  separable: true
+diagnostics:
+  n_positives: 5
+  n_negatives: 4
+  positives_failing_rim_all_three: 5
+  positives_rim_all_three_would_kill_frac: 1.0
+provenance:
+  metrics_csv: results/PDL1/filter_calibration/calibration_metrics.csv
+  complexes_json: results/PDL1/filter_calibration/calibration_complexes.json
+  script: scripts/pdl1_calibrate_filters.py

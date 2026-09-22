@@ -1,0 +1,29 @@
+{
+  "target": "PD-L1",
+  "uniprot": "Q9NZQ7",
+  "numbering_reference": "7OUN_chain_A",
+  "accessed": "2026-09-22",
+  "superseded_note": "Full ranked consensus in hotspots_ranked.json and results/PDL1/hotspot_consensus.*",
+  "core_hotspots_rfdiffusion": [
+    {"res": 56, "aa": "TYR", "rf": "A56"},
+    {"res": 123, "aa": "TYR", "rf": "A123"},
+    {"res": 115, "aa": "MET", "rf": "A115"},
+    {"res": 113, "aa": "ARG", "rf": "A113"},
+    {"res": 66, "aa": "GLN", "rf": "A66"},
+    {"res": 121, "aa": "ALA", "rf": "A121"}
+  ],
+  "extended_contacts": [
+    {"res": 54, "aa": "ILE"},
+    {"res": 58, "aa": "GLU"},
+    {"res": 76, "aa": "VAL"},
+    {"res": 117, "aa": "SER"},
+    {"res": 122, "aa": "ASP"},
+    {"res": 63, "aa": "ASN"}
+  ],
+  "blockade_filter_priority": [
+    {"res": 124, "aa": "LYS", "why": "PD-1 2nd densest; macro 1/5 — best gap"},
+    {"res": 125, "aa": "ARG", "why": "PD-1+Abs; BMS salt-bridge site — redesign chemically"},
+    {"res": 122, "aa": "ASP", "why": "PD-1 dense polar rim"}
+  ],
+  "notes": "Core = 5/5 or 4/5 macrocycle consensus ∩ PD-1 footprint from scripts/pdl1_hotspot_consensus.py (ncAA HETATM included)."
+}

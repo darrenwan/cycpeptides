@@ -1,0 +1,143 @@
+# PD-L1 dry-lab campaign roadmap (machine-readable)
+# Companion to docs/PDL1_大环肽_战役规格.md §10 and
+# docs/PDL1_设计方案科学评估与工程方案.md
+# Updated: 2026-09-22
+#
+# Python for campaign scripts: uv only (`uv sync` / `uv run`).
+# GPU stacks (RFdiffusion / ProteinMPNN torch): Docker images.
+# Weights / MPNN code live under this repo (models/, third_party/).
+
+campaign: PDL1_macrocycle_dry_lab
+default_track: A
+runtime:
+  campaign_python: uv
+  uv_project: .
+  gpu_diffusion: docker:rosettacommons/rfdiffusion:latest
+  gpu_afcyc: docker:pdl1-afcyc:latest
+  forbid_system_python: true
+  s2_stages: [rfpeptides, proteinmpnn, afcycdesign, uv_score]
+  local_assets:
+    rfdiffusion_models: models/rfdiffusion
+    afcyc_params: models/afcyc
+    proteinmpnn: third_party/ProteinMPNN
+    bootstrap: scripts/bootstrap_local_assets.sh
+gate_policy:
+  primary: pd1_footprint_jaccard_or_occlusion
+  rim_residues: [A122, A124, A125]
+  rim_mode: soft_score_plus_quota  # NEVER require_all_three by default
+  diversity: vs_8ALX_rmsd_quota
+  calibrate_before_s3: true
+
+stages:
+  S0_spec_assets:
+    status: done
+    outputs:
+      - docs/PDL1_大环肽_战役规格.md
+      - data/targets/PDL1/design_spec.yaml
+      - data/targets/PDL1/hotspots.json
+      - results/PDL1/hotspot_consensus.json
+      - results/PDL1/differentiation_opportunities.md
+      - docs/PDL1_设计方案科学评估与工程方案.md
+
+  S1_filter_scaffold:
+    status: done
+    depends_on: [S0_spec_assets]
+    blocks: [S2_smoke, S3_main_generation]
+    tasks:
+      - id: S1a_crop_receptor
+        script: scripts/pdl1_prepare_receptor.py
+        run: "uv run python scripts/pdl1_prepare_receptor.py"
+        doD: "5O45 cropped to A18-134; hotspot residues present"
+      - id: S1b_blockade_metrics
+        script: scripts/pdl1_blockade_metrics.py
+        run: "uv run python scripts/pdl1_blockade_metrics.py"
+        doD: "Footprint Jaccard + rim per-residue + vs-8ALX RMSD on crystal complexes"
+      - id: S1c_calibrate
+        script: scripts/pdl1_calibrate_filters.py
+        run: "uv run python scripts/pdl1_calibrate_filters.py"
+        doD: "thresholds_v1.yaml; positive macros pass P0; negatives mostly fail"
+    outputs:
+      - data/targets/PDL1/pdb/PDL1_IgV_5O45_A18-134.pdb
+      - results/PDL1/filter_calibration/
+      - data/targets/PDL1/thresholds_v1.yaml
+      - results/PDL1/receptor_prep_report.json
+
+  S2_smoke:
+    status: done
+    depends_on: [S1_filter_scaffold]
+    blocks: [S3_main_generation]
+    note: >
+      Three-stage dry-lab core for smoke: RFpeptides → ProteinMPNN (omit C) → AfCycDesign.
+      Scoring (uv) runs after AfCyc predictions.
+    tasks:
+      - id: S2a_rfpeptides
+        run: "bash scripts/pdl1_smoke_rfpeptides.sh"
+        doD: "cyclic binder PDBs under results/PDL1/smoke/rfpeptides/"
+        status: done
+      - id: S2b_mpnn
+        run: "bash scripts/pdl1_smoke_mpnn.sh"
+        doD: "designed PDBs under results/PDL1/smoke/mpnn/designed_pdbs/"
+        status: done
+      - id: S2c_afcyc
+        run: "bash scripts/pdl1_smoke_afcyc.sh"
+        doD: "AfCyc predicted complexes under results/PDL1/smoke/afcyc/; metrics non-empty"
+        status: done
+        completed_note: "2026-09-22 AFCYC_LIMIT=2 n_ok=2/2"
+      - id: S2d_score
+        run: "uv run python scripts/pdl1_smoke_score.py"
+        doD: "smoke_metrics.csv prefers AfCyc preds; table non-empty"
+        status: done
+      - id: S2_orchestrator
+        run: "bash scripts/pdl1_smoke_all.sh"
+        doD: "full three-stage smoke + uv score; SMOKE_REPORT.md updated"
+        status: done
+    outputs:
+      - results/PDL1/smoke/
+      - results/PDL1/smoke/SMOKE_REPORT.md
+      - results/PDL1/smoke/afcyc/
+  S3_main_generation:
+    status: todo
+    depends_on: [S2_smoke]
+    tasks:
+      - id: S3_rfpeptides_10k
+        params:
+          receptor: data/targets/PDL1/pdb/PDL1_IgV_5O45_A18-134.pdb
+          contigs: "[12-16 A18-134/0]"
+          hotspot_res: ["A56", "A123", "A115", "A113", "A66", "A121"]
+          num_designs: 10000
+      - id: S3_mpnn_4seq_omit_C
+    outputs:
+      - results/PDL1/rfpeptides/
+      - results/PDL1/mpnn/
+
+  S4_structure_physics:
+    status: todo
+    depends_on: [S3_main_generation]
+    funnel_hint:
+      - single_model_top_frac: 0.05
+      - dual_model_plus_rosetta_keep: "200-500"
+      - cross_eval_final_pool_only: true
+    outputs:
+      - results/PDL1/structure_filter/
+
+  S5_blockade_diversity:
+    status: todo
+    depends_on: [S4_structure_physics, S1_filter_scaffold]
+    selection_mix:
+      top_composite: 0.40
+      high_rim_quota: 0.30
+      high_vs_8alx_rmsd_quota: 0.30
+    outputs:
+      - results/PDL1/selection/
+
+  S6_deliver:
+    status: todo
+    depends_on: [S5_blockade_diversity]
+    n_candidates: [24, 48]
+    outputs:
+      - results/PDL1/candidates_round1/
+
+  S7_track_B_optional:
+    status: deferred
+    depends_on: [S6_deliver]
+    note: "8ALX pharmacophore redesign / ncAA; internal benchmark only"

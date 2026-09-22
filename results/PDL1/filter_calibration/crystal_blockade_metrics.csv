@@ -1,0 +1,8 @@
+tag,role,pdb,pdl1_chain,partner_chains,n_contact_res,n_footprint_overlap,pd1_jaccard,rim_D122,rim_K124,rim_R125,rim_score,rim_all_three,rmsd_vs_8alx
+7OUN_peptide104,positive,data/targets/PDL1/pdb/7OUN.pdb,A,B,12,12,0.6667,12,3,0,0.2437,0,
+5O45_peptide57,positive,data/targets/PDL1/pdb/5O45.pdb,A,B,17,11,0.4583,9,0,0,0.1406,0,
+8ALX_pAC65,positive,data/targets/PDL1/pdb/8ALX.pdb,A,B,18,11,0.44,0,0,11,0.1719,0,
+6PV9_macro,positive,data/targets/PDL1/pdb/6PV9.pdb,A,B,15,9,0.375,0,0,0,0.0,0,
+5O4Y_peptide71_BD,positive,data/targets/PDL1/pdb/5O4Y.pdb,B,D,13,7,0.2917,0,0,0,0.0,0,
+4ZQK_PD1,footprint_ref,data/targets/PDL1/pdb/4ZQK.pdb,A,B,18,18,1.0,19,27,16,0.9219,1,
+5O45_no_ligand,negative_null,data/targets/PDL1/pdb/PDL1_IgV_5O45_A18-134.pdb,A,,0,0,0.0,0,0,0,0.0,0,

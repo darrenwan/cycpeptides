@@ -1,0 +1,361 @@
+{
+  "accessed": "2026-09-22",
+  "tool": "AfCycDesign",
+  "n_input": 16,
+  "n_ok": 16,
+  "n_failed": 0,
+  "rows": [
+    {
+      "tag": "pdl1_cyc_0_sample1",
+      "input_pdb": "/work/results/PDL1/smoke/mpnn/designed_pdbs/pdl1_cyc_0_sample1.pdb",
+      "pred_pdb": "/work/results/PDL1/smoke/afcyc/pdl1_cyc_0_sample1_afcyc_pred.pdb",
+      "status": "ok",
+      "stage": "S2c_afcyc",
+      "peptide_seq": "SAGAIPRASVARAATP",
+      "peptide_len": 16,
+      "target_len": 117,
+      "pred_chain_map": {
+        "src_binder": "B",
+        "src_target": "A",
+        "dst_binder": "A",
+        "dst_target": "B"
+      },
+      "confidence": {
+        "plddt": 0.8680292963981628,
+        "ptm": 0.7812251448631287,
+        "i_ptm": 0.6360721588134766
+      },
+      "pep_ca_rmsd_vs_design": 0.283
+    },
+    {
+      "tag": "pdl1_cyc_0_sample2",
+      "input_pdb": "/work/results/PDL1/smoke/mpnn/designed_pdbs/pdl1_cyc_0_sample2.pdb",
+      "pred_pdb": "/work/results/PDL1/smoke/afcyc/pdl1_cyc_0_sample2_afcyc_pred.pdb",
+      "status": "ok",
+      "stage": "S2c_afcyc",
+      "peptide_seq": "SAGVISSASVARQALP",
+      "peptide_len": 16,
+      "target_len": 117,
+      "pred_chain_map": {
+        "src_binder": "B",
+        "src_target": "A",
+        "dst_binder": "A",
+        "dst_target": "B"
+      },
+      "confidence": {
+        "plddt": 0.8892106413841248,
+        "ptm": 0.804347038269043,
+        "i_ptm": 0.7072116136550903
+      },
+      "pep_ca_rmsd_vs_design": 0.279
+    },
+    {
+      "tag": "pdl1_cyc_1_sample1",
+      "input_pdb": "/work/results/PDL1/smoke/mpnn/designed_pdbs/pdl1_cyc_1_sample1.pdb",
+      "pred_pdb": "/work/results/PDL1/smoke/afcyc/pdl1_cyc_1_sample1_afcyc_pred.pdb",
+      "status": "ok",
+      "stage": "S2c_afcyc",
+      "peptide_seq": "ALTGTRTSPLLG",
+      "peptide_len": 12,
+      "target_len": 117,
+      "pred_chain_map": {
+        "src_binder": "B",
+        "src_target": "A",
+        "dst_binder": "A",
+        "dst_target": "B"
+      },
+      "confidence": {
+        "plddt": 0.8616248965263367,
+        "ptm": 0.7424436211585999,
+        "i_ptm": 0.34118252992630005
+      },
+      "pep_ca_rmsd_vs_design": 0.289
+    },
+    {
+      "tag": "pdl1_cyc_1_sample2",
+      "input_pdb": "/work/results/PDL1/smoke/mpnn/designed_pdbs/pdl1_cyc_1_sample2.pdb",
+      "pred_pdb": "/work/results/PDL1/smoke/afcyc/pdl1_cyc_1_sample2_afcyc_pred.pdb",
+      "status": "ok",
+      "stage": "S2c_afcyc",
+      "peptide_seq": "ARTGTRTSPLEG",
+      "peptide_len": 12,
+      "target_len": 117,
+      "pred_chain_map": {
+        "src_binder": "B",
+        "src_target": "A",
+        "dst_binder": "A",
+        "dst_target": "B"
+      },
+      "confidence": {
+        "plddt": 0.8659963011741638,
+        "ptm": 0.7538161277770996,
+        "i_ptm": 0.4259380102157593
+      },
+      "pep_ca_rmsd_vs_design": 0.235
+    },
+    {
+      "tag": "pdl1_cyc_2_sample1",
+      "input_pdb": "/work/results/PDL1/smoke/mpnn/designed_pdbs/pdl1_cyc_2_sample1.pdb",
+      "pred_pdb": "/work/results/PDL1/smoke/afcyc/pdl1_cyc_2_sample1_afcyc_pred.pdb",
+      "status": "ok",
+      "stage": "S2c_afcyc",
+      "peptide_seq": "SLEDVRAAYLGL",
+      "peptide_len": 12,
+      "target_len": 117,
+      "pred_chain_map": {
+        "src_binder": "B",
+        "src_target": "A",
+        "dst_binder": "A",
+        "dst_target": "B"
+      },
+      "confidence": {
+        "plddt": 0.8647018671035767,
+        "ptm": 0.7536508440971375,
+        "i_ptm": 0.3647344708442688
+      },
+      "pep_ca_rmsd_vs_design": 0.353
+    },
+    {
+      "tag": "pdl1_cyc_2_sample2",
+      "input_pdb": "/work/results/PDL1/smoke/mpnn/designed_pdbs/pdl1_cyc_2_sample2.pdb",
+      "pred_pdb": "/work/results/PDL1/smoke/afcyc/pdl1_cyc_2_sample2_afcyc_pred.pdb",
+      "status": "ok",
+      "stage": "S2c_afcyc",
+      "peptide_seq": "SLSDVEAAYLGL",
+      "peptide_len": 12,
+      "target_len": 117,
+      "pred_chain_map": {
+        "src_binder": "B",
+        "src_target": "A",
+        "dst_binder": "A",
+        "dst_target": "B"
+      },
+      "confidence": {
+        "plddt": 0.8837758302688599,
+        "ptm": 0.7889063358306885,
+        "i_ptm": 0.45581182837486267
+      },
+      "pep_ca_rmsd_vs_design": 0.312
+    },
+    {
+      "tag": "pdl1_cyc_3_sample1",
+      "input_pdb": "/work/results/PDL1/smoke/mpnn/designed_pdbs/pdl1_cyc_3_sample1.pdb",
+      "pred_pdb": "/work/results/PDL1/smoke/afcyc/pdl1_cyc_3_sample1_afcyc_pred.pdb",
+      "status": "ok",
+      "stage": "S2c_afcyc",
+      "peptide_seq": "GAPELSLKRSGLPAS",
+      "peptide_len": 15,
+      "target_len": 117,
+      "pred_chain_map": {
+        "src_binder": "B",
+        "src_target": "A",
+        "dst_binder": "A",
+        "dst_target": "B"
+      },
+      "confidence": {
+        "plddt": 0.855491042137146,
+        "ptm": 0.731467068195343,
+        "i_ptm": 0.4307582378387451
+      },
+      "pep_ca_rmsd_vs_design": 0.327
+    },
+    {
+      "tag": "pdl1_cyc_3_sample2",
+      "input_pdb": "/work/results/PDL1/smoke/mpnn/designed_pdbs/pdl1_cyc_3_sample2.pdb",
+      "pred_pdb": "/work/results/PDL1/smoke/afcyc/pdl1_cyc_3_sample2_afcyc_pred.pdb",
+      "status": "ok",
+      "stage": "S2c_afcyc",
+      "peptide_seq": "GAPELSLKKSGRLAS",
+      "peptide_len": 15,
+      "target_len": 117,
+      "pred_chain_map": {
+        "src_binder": "B",
+        "src_target": "A",
+        "dst_binder": "A",
+        "dst_target": "B"
+      },
+      "confidence": {
+        "plddt": 0.8651916980743408,
+        "ptm": 0.749238133430481,
+        "i_ptm": 0.41849321126937866
+      },
+      "pep_ca_rmsd_vs_design": 0.316
+    },
+    {
+      "tag": "pdl1_cyc_4_sample1",
+      "input_pdb": "/work/results/PDL1/smoke/mpnn/designed_pdbs/pdl1_cyc_4_sample1.pdb",
+      "pred_pdb": "/work/results/PDL1/smoke/afcyc/pdl1_cyc_4_sample1_afcyc_pred.pdb",
+      "status": "ok",
+      "stage": "S2c_afcyc",
+      "peptide_seq": "KGNPSGGAEDRL",
+      "peptide_len": 12,
+      "target_len": 117,
+      "pred_chain_map": {
+        "src_binder": "B",
+        "src_target": "A",
+        "dst_binder": "A",
+        "dst_target": "B"
+      },
+      "confidence": {
+        "plddt": 0.8774901628494263,
+        "ptm": 0.7650232315063477,
+        "i_ptm": 0.4580490291118622
+      },
+      "pep_ca_rmsd_vs_design": 0.324
+    },
+    {
+      "tag": "pdl1_cyc_4_sample2",
+      "input_pdb": "/work/results/PDL1/smoke/mpnn/designed_pdbs/pdl1_cyc_4_sample2.pdb",
+      "pred_pdb": "/work/results/PDL1/smoke/afcyc/pdl1_cyc_4_sample2_afcyc_pred.pdb",
+      "status": "ok",
+      "stage": "S2c_afcyc",
+      "peptide_seq": "RGNPSGGPEDRL",
+      "peptide_len": 12,
+      "target_len": 117,
+      "pred_chain_map": {
+        "src_binder": "B",
+        "src_target": "A",
+        "dst_binder": "A",
+        "dst_target": "B"
+      },
+      "confidence": {
+        "plddt": 0.8796390295028687,
+        "ptm": 0.7698787450790405,
+        "i_ptm": 0.4925481975078583
+      },
+      "pep_ca_rmsd_vs_design": 0.307
+    },
+    {
+      "tag": "pdl1_cyc_5_sample1",
+      "input_pdb": "/work/results/PDL1/smoke/mpnn/designed_pdbs/pdl1_cyc_5_sample1.pdb",
+      "pred_pdb": "/work/results/PDL1/smoke/afcyc/pdl1_cyc_5_sample1_afcyc_pred.pdb",
+      "status": "ok",
+      "stage": "S2c_afcyc",
+      "peptide_seq": "GFGPWGSVVNAASG",
+      "peptide_len": 14,
+      "target_len": 117,
+      "pred_chain_map": {
+        "src_binder": "B",
+        "src_target": "A",
+        "dst_binder": "A",
+        "dst_target": "B"
+      },
+      "confidence": {
+        "plddt": 0.8739866018295288,
+        "ptm": 0.7863985300064087,
+        "i_ptm": 0.4433906078338623
+      },
+      "pep_ca_rmsd_vs_design": 0.808
+    },
+    {
+      "tag": "pdl1_cyc_5_sample2",
+      "input_pdb": "/work/results/PDL1/smoke/mpnn/designed_pdbs/pdl1_cyc_5_sample2.pdb",
+      "pred_pdb": "/work/results/PDL1/smoke/afcyc/pdl1_cyc_5_sample2_afcyc_pred.pdb",
+      "status": "ok",
+      "stage": "S2c_afcyc",
+      "peptide_seq": "GFSSRGSVINAASG",
+      "peptide_len": 14,
+      "target_len": 117,
+      "pred_chain_map": {
+        "src_binder": "B",
+        "src_target": "A",
+        "dst_binder": "A",
+        "dst_target": "B"
+      },
+      "confidence": {
+        "plddt": 0.8737138509750366,
+        "ptm": 0.7836830019950867,
+        "i_ptm": 0.3511359989643097
+      },
+      "pep_ca_rmsd_vs_design": 0.997
+    },
+    {
+      "tag": "pdl1_cyc_6_sample1",
+      "input_pdb": "/work/results/PDL1/smoke/mpnn/designed_pdbs/pdl1_cyc_6_sample1.pdb",
+      "pred_pdb": "/work/results/PDL1/smoke/afcyc/pdl1_cyc_6_sample1_afcyc_pred.pdb",
+      "status": "ok",
+      "stage": "S2c_afcyc",
+      "peptide_seq": "KAAGITEAKGVTAEEM",
+      "peptide_len": 16,
+      "target_len": 117,
+      "pred_chain_map": {
+        "src_binder": "B",
+        "src_target": "A",
+        "dst_binder": "A",
+        "dst_target": "B"
+      },
+      "confidence": {
+        "plddt": 0.885959267616272,
+        "ptm": 0.7835694551467896,
+        "i_ptm": 0.7127088904380798
+      },
+      "pep_ca_rmsd_vs_design": 0.349
+    },
+    {
+      "tag": "pdl1_cyc_6_sample2",
+      "input_pdb": "/work/results/PDL1/smoke/mpnn/designed_pdbs/pdl1_cyc_6_sample2.pdb",
+      "pred_pdb": "/work/results/PDL1/smoke/afcyc/pdl1_cyc_6_sample2_afcyc_pred.pdb",
+      "status": "ok",
+      "stage": "S2c_afcyc",
+      "peptide_seq": "KAAGIEEAKGPTAELM",
+      "peptide_len": 16,
+      "target_len": 117,
+      "pred_chain_map": {
+        "src_binder": "B",
+        "src_target": "A",
+        "dst_binder": "A",
+        "dst_target": "B"
+      },
+      "confidence": {
+        "plddt": 0.8850798606872559,
+        "ptm": 0.7840564250946045,
+        "i_ptm": 0.6914312839508057
+      },
+      "pep_ca_rmsd_vs_design": 0.441
+    },
+    {
+      "tag": "pdl1_cyc_7_sample1",
+      "input_pdb": "/work/results/PDL1/smoke/mpnn/designed_pdbs/pdl1_cyc_7_sample1.pdb",
+      "pred_pdb": "/work/results/PDL1/smoke/afcyc/pdl1_cyc_7_sample1_afcyc_pred.pdb",
+      "status": "ok",
+      "stage": "S2c_afcyc",
+      "peptide_seq": "IGNAPPSASKYAPL",
+      "peptide_len": 14,
+      "target_len": 117,
+      "pred_chain_map": {
+        "src_binder": "B",
+        "src_target": "A",
+        "dst_binder": "A",
+        "dst_target": "B"
+      },
+      "confidence": {
+        "plddt": 0.8696922659873962,
+        "ptm": 0.7780662775039673,
+        "i_ptm": 0.5839034914970398
+      },
+      "pep_ca_rmsd_vs_design": 0.442
+    },
+    {
+      "tag": "pdl1_cyc_7_sample2",
+      "input_pdb": "/work/results/PDL1/smoke/mpnn/designed_pdbs/pdl1_cyc_7_sample2.pdb",
+      "pred_pdb": "/work/results/PDL1/smoke/afcyc/pdl1_cyc_7_sample2_afcyc_pred.pdb",
+      "status": "ok",
+      "stage": "S2c_afcyc",
+      "peptide_seq": "IGNAPPSAARYAPL",
+      "peptide_len": 14,
+      "target_len": 117,
+      "pred_chain_map": {
+        "src_binder": "B",
+        "src_target": "A",
+        "dst_binder": "A",
+        "dst_target": "B"
+      },
+      "confidence": {
+        "plddt": 0.8691375851631165,
+        "ptm": 0.7799287438392639,
+        "i_ptm": 0.5735378265380859
+      },
+      "pep_ca_rmsd_vs_design": 0.437
+    }
+  ]
+}

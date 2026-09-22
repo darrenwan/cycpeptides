@@ -1,0 +1,234 @@
+# PD-L1 macrocyclic peptide design specification
+# Machine-readable companion to docs/PDL1_大环肽_战役规格.md
+# Date: 2026-09-22
+# Scope: pure in silico (dry-lab) campaign — no wet-lab assays, synthesis orders, or clinical plans
+# Synced: Track A receptor = 5O45; cross-structure hotspot consensus; blockade filters
+
+target:
+  name: PD-L1
+  gene: CD274
+  uniprot: Q9NZQ7
+  organism: Homo sapiens
+  modality: macrocyclic_peptide
+  mechanism: competitive_block_of_PD1_binding_face
+  localization: extracellular_IgV
+  campaign_profile: alpha_extracellular_PPI  # not permeability-first
+  project_scope: dry_lab_only
+
+structures:
+  # Locked roles (do not conflate):
+  # - track_A_receptor: best PD-L1 coordinates for RFpeptides (resolution)
+  # - track_B_pharmacophore: best macrocycle pose for redesign (literature potency + geometry)
+  # - binding_mode_reference: cleanest peptide orientation for interpretation / cross-eval
+  track_A_receptor_pdb: data/targets/PDL1/pdb/PDL1_IgV_5O45_A18-134.pdb
+  track_B_pharmacophore_pdb: 8ALX
+  binding_mode_reference_pdb: 7OUN
+  cross_eval_receptor_pdbs:
+    - data/targets/PDL1/pdb/PDL1_IgV_7OUN_chainA.pdb
+    - data/targets/PDL1/pdb/PDL1_IgV_8ALX_chainA.pdb
+  alternate_receptor_pdbs:
+    - data/targets/PDL1/pdb/PDL1_IgV_8ALX_chainA.pdb
+    - data/targets/PDL1/pdb/PDL1_IgV_7OUN_chainA.pdb
+    - data/targets/PDL1/pdb/PDL1_IgV_5O4Y_chainA.pdb  # from 5O4Y chain B -> A
+  primary_receptor_pdb: data/targets/PDL1/pdb/PDL1_IgV_5O45_A18-134.pdb
+  primary_receptor_uncropped: data/targets/PDL1/pdb/PDL1_IgV_5O45_chainA.pdb
+  thresholds: data/targets/PDL1/thresholds_v1.yaml
+  runtime:
+    campaign_python: uv
+    forbid_system_python: true
+    entrypoint: "uv run python scripts/..."
+    lockfile: uv.lock
+    project_file: pyproject.toml
+    gpu_diffusion: "docker:rosettacommons/rfdiffusion:latest"
+    docs:
+      - README.md
+      - docs/PDL1_大环肽_战役规格.md#0-运行时与环境uv
+      - docs/PDL1_设计方案科学评估与工程方案.md
+  references:
+    - pdb: 8ALX
+      note: "Track B pharmacophore #1: pAC65, 1.10 A"
+    - pdb: 5O45
+      note: "Track A receptor #1: highest-res PD-L1 IgV, 0.99 A"
+    - pdb: 7OUN
+      note: "Binding-mode / cross-eval: peptide 104 clean pose, 1.90 A"
+    - pdb: 5O4Y
+      note: "Group II opposite ring; receptor cut = chain B rewritten as A (ASU: B/C/E protein, A/D/F peptide)"
+    - pdb: 6PV9
+      note: "Footprint cross-check, 2.00 A"
+    - pdb: 4ZQK
+      note: "PD-1/PD-L1 native footprint"
+    - pdb: 5XXY
+      note: "atezolizumab Fab epitope reference (not design receptor)"
+    - pdb: 5GRJ
+      note: "avelumab epitope reference"
+    - pdb: 5X8M
+      note: "durvalumab epitope reference"
+    - pdb: 5C3T
+      note: "apo PD-L1 optional cross-check"
+    - note: "Avoid small-molecule dimer structures (5N2F/5J89/5NIU/6NM8) as macrocycle templates"
+
+chain_numbering:
+  design_chain: A
+  residue_range_igv: [18, 134]
+  note: "UniProt IgV numbering as in 7OUN/5O45 chain A for hotspot strings"
+
+hotspots:
+  # From scripts/pdl1_hotspot_consensus.py (5 macros + 4ZQK + Abs; ncAA HETATM included)
+  source: results/PDL1/hotspot_consensus.json
+  core_rfdiffusion:
+    - A56   # Tyr56  — 5/5 macro, central aromatic
+    - A123  # Tyr123 — 5/5 macro, densest PD-1 contact
+    - A115  # Met115 — 5/5 macro, S/pi groove
+    - A113  # Arg113 — 5/5 macro, electrostatic rim
+    - A66   # Gln66  — 5/5 macro, polar anchor
+    - A121  # Ala121 — 4/5 macro, groove floor
+  extended_contacts:
+    - A54   # Ile54
+    - A58   # Glu58
+    - A76   # Val76
+    - A117  # Ser117
+    - A63   # Asn63
+    - A122  # Asp122 (also blockade hard filter)
+  blockade_filter_priority:
+    - A124  # Lys124 — PD-1 2nd densest; macro 1/5 — best gap
+    - A125  # Arg125 — BMS salt-bridge site; redesign with canonical polar handle
+    - A122  # Asp122 — PD-1 dense polar rim
+  pd1_footprint_4zqk_pdl1:
+    - 19   # Phe
+    - 23   # Val
+    - 26   # Asp
+    - 54
+    - 56
+    - 58
+    - 66
+    - 76
+    - 113
+    - 115
+    - 117
+    - 119
+    - 120
+    - 121
+    - 122
+    - 123
+    - 124
+    - 125
+
+differentiation:
+  primary_axes:
+    - polar_rim_vs_BMS_acyl_Trp_salt_bridge  # K124/R125/D122
+    - group_II_opposite_ring_orientation     # 5O4Y-like
+    - eccentric_blockade_plus_conjugate_handle
+  avoid:
+    - small_molecule_dimer_pocket
+    - copy_pAC65_dual_Trp_acyl_salt_bridge_on_track_A
+    - hotspot_res_ge_10
+
+macrocycle_design:
+  tracks:
+    A_de_novo:
+      receptor_pdb: data/targets/PDL1/pdb/PDL1_IgV_5O45_A18-134.pdb
+      cyclization: head_to_tail_amide
+      length_range: [12, 16]
+      length_extended: [10, 18]
+      backbone_generator: RFpeptides
+      sequence_design: ProteinMPNN
+      omit_AAs: ["C"]
+      num_backbones_target: 10000
+      sequences_per_backbone: 4
+      structure_validators:
+        - AfCycDesign
+        - HighFold_Multimer
+      physics_filter: Rosetta_FastRelax
+      cross_eval_rotamers: ["7OUN", "8ALX"]  # Met115-sensitive
+    B_known_pharmacophore:
+      templates: ["8ALX", "7OUN", "5O45", "6PV9"]
+      primary_template: 8ALX
+      methods:
+        - partial_diffusion_or_motif_scaffold
+        - AfCyc_redesign
+        - ncaa_optimization_via_CyclicBoltz1_or_AF3
+      ncaa_allowed: ["N-Me", "D-aa", "Sar", "other_with_defined_chemistry"]
+      fto_note: "Avoid BMS patent scaffold identity; use for internal benchmark only"
+
+filters:
+  structure:
+    peptide_ca_rmsd_max_A: 2.0
+    require_dual_model_consensus: true
+  physics:
+    use_metrics: ["ddG", "CMS", "SAP", "iPAE"]
+  biology_proxy:
+    primary_gate: pd1_footprint_overlap  # calibrate threshold; NOT rim AND
+    blockade_rim_score_residues: ["A122", "A124", "A125"]
+    rim_gate_mode: soft_score_plus_quota  # forbid require_all_three by default
+    note: >-
+      Crystal macros do not simultaneously contact D122+K124+R125;
+      use rim as ranking/quota, footprint as primary gate.
+  adme:
+    cycpeptmp_weight: low  # extracellular target; optional
+  diversity:
+    cluster_ca_rmsd_A: 1.5
+    vs_known_macro_reference: 8ALX
+    track_A_high_rmsd_quota: true  # opposite/eccentric poses via quota
+    prioritized_candidates_per_round: [24, 48]
+    selection_mix_default:
+      top_composite: 0.40
+      high_rim_quota: 0.30
+      high_vs_8alx_rmsd_quota: 0.30
+
+# In silico proxy readouts (NOT wet assays).
+computational_readouts:
+  primary_gate:
+    - pd1_footprint_occlusion
+  differentiation_soft:
+    - rim_score_A122_A124_A125  # per-residue, not AND
+  structure_confidence:
+    - iPAE_or_interface_pLDDT
+    - design_vs_predicted_peptide_ca_rmsd
+  physics:
+    - Rosetta_ddG
+    - CMS
+    - SAP
+  diversity:
+    - vs_8ALX_ca_rmsd_bins
+  optional_weak:
+    - CycPeptMP
+    - net_charge_heuristic
+
+deliverables:
+  endpoint: dry_lab_candidate_package
+  include:
+    - sequences_and_cyclization_definition
+    - predicted_complex_pdbs
+    - metrics_table
+    - prioritized_candidate_pool
+    - provenance_params_and_versions
+  exclude:
+    - synthesis_purchase_orders
+    - wet_lab_assay_protocols
+    - dosing_or_clinical_plans
+
+computational_controls:
+  calibrate_filters_before_release: true
+  positive_backbones:
+    - 7OUN_peptide104
+    - 8ALX_pAC65
+  negative_backbones:
+    - random_head_to_tail_cycles
+    - hotspot_miss_designs  # intentionally avoid Y56/Y123
+  false_bind_baseline:
+    - face_contact_without_PD1_occlusion  # should fail primary footprint gate
+  mechanism_note: "Do not use small-molecule dimer pockets as positive macrocycle templates"
+  evaluation_doc: docs/PDL1_设计方案科学评估与工程方案.md
+  roadmap: data/targets/PDL1/roadmap.yaml
+  deferred_weak_gates:
+    - oral_permeability_score  # config alpha: weak weight
+    - mouse_cross_and_PDL2_conservation_labels  # optional annotation only
+
+risks:
+  - flat_interface_false_positives
+  - crowded_IP_from_BMS_macrocycles
+  - mouse_human_interface_divergence  # conservation clustering only
+  - hydrophobic_aggregation
+  - single_holo_rotamer_false_negatives
+  - uncalibrated_filter_thresholds_without_positive_macro_controls
+  - mistaking_rank_scores_for_measured_affinity

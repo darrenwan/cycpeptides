@@ -1,0 +1,12 @@
+{
+  "accessed": "2026-09-22",
+  "n_scored": 16,
+  "source": "smoke_afcyc",
+  "requires_afcyc_for_s2_done": true,
+  "afcyc_present": true,
+  "T_pd1_jaccard": 0.15,
+  "n_pass_P0": 0,
+  "metrics_csv": "results/PDL1/smoke/smoke_metrics.csv",
+  "python": "/mnt/data4t/aidd/cycpeptides/.venv/bin/python3",
+  "note": "S2 score via uv; prefer AfCyc preds when present"
+}

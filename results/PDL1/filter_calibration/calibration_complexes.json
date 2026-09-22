@@ -1,0 +1,90 @@
+[
+  {
+    "tag": "7OUN_peptide104",
+    "role": "positive",
+    "pdb": "7OUN.pdb",
+    "pdl1": "A",
+    "partners": [
+      "B"
+    ]
+  },
+  {
+    "tag": "5O45_peptide57",
+    "role": "positive",
+    "pdb": "5O45.pdb",
+    "pdl1": "A",
+    "partners": [
+      "B"
+    ]
+  },
+  {
+    "tag": "8ALX_pAC65",
+    "role": "positive",
+    "pdb": "8ALX.pdb",
+    "pdl1": "A",
+    "partners": [
+      "B"
+    ]
+  },
+  {
+    "tag": "6PV9_macro",
+    "role": "positive",
+    "pdb": "6PV9.pdb",
+    "pdl1": "A",
+    "partners": [
+      "B"
+    ]
+  },
+  {
+    "tag": "5O4Y_peptide71_BD",
+    "role": "positive",
+    "pdb": "5O4Y.pdb",
+    "pdl1": "B",
+    "partners": [
+      "D"
+    ]
+  },
+  {
+    "tag": "4ZQK_PD1",
+    "role": "footprint_ref",
+    "pdb": "4ZQK.pdb",
+    "pdl1": "A",
+    "partners": [
+      "B"
+    ]
+  },
+  {
+    "tag": "decoy_7OUN_pep_plus50A",
+    "role": "negative_decoy",
+    "pdb": "results/PDL1/filter_calibration/decoy_7OUN_pep_plus50A.pdb",
+    "pdl1": "A",
+    "partners": [
+      "B"
+    ]
+  },
+  {
+    "tag": "decoy_5O45_pep_plus50A",
+    "role": "negative_decoy",
+    "pdb": "results/PDL1/filter_calibration/decoy_5O45_pep_plus50A.pdb",
+    "pdl1": "A",
+    "partners": [
+      "B"
+    ]
+  },
+  {
+    "tag": "decoy_8ALX_pep_plus50A",
+    "role": "negative_decoy",
+    "pdb": "results/PDL1/filter_calibration/decoy_8ALX_pep_plus50A.pdb",
+    "pdl1": "A",
+    "partners": [
+      "B"
+    ]
+  },
+  {
+    "tag": "5O45_no_ligand",
+    "role": "negative_null",
+    "pdb": "PDL1_IgV_5O45_A18-134.pdb",
+    "pdl1": "A",
+    "partners": []
+  }
+]

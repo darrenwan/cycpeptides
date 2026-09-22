@@ -1,0 +1,17 @@
+tag,role,pdb,pdl1_chain,partner_chains,n_contact_res,n_footprint_overlap,pd1_jaccard,rim_D122,rim_K124,rim_R125,rim_score,rim_all_three,rmsd_vs_8alx,pass_P0
+pdl1_cyc_0_sample1_afcyc_pred,smoke_afcyc,results/PDL1/smoke/afcyc/pdl1_cyc_0_sample1_afcyc_pred.pdb,B,A,16,0,0.0,0,0,0,0.0,0,,False
+pdl1_cyc_0_sample2_afcyc_pred,smoke_afcyc,results/PDL1/smoke/afcyc/pdl1_cyc_0_sample2_afcyc_pred.pdb,B,A,18,0,0.0,0,0,0,0.0,0,,False
+pdl1_cyc_1_sample1_afcyc_pred,smoke_afcyc,results/PDL1/smoke/afcyc/pdl1_cyc_1_sample1_afcyc_pred.pdb,B,A,12,0,0.0,0,0,0,0.0,0,,False
+pdl1_cyc_1_sample2_afcyc_pred,smoke_afcyc,results/PDL1/smoke/afcyc/pdl1_cyc_1_sample2_afcyc_pred.pdb,B,A,11,0,0.0,0,0,0,0.0,0,,False
+pdl1_cyc_2_sample1_afcyc_pred,smoke_afcyc,results/PDL1/smoke/afcyc/pdl1_cyc_2_sample1_afcyc_pred.pdb,B,A,8,1,0.04,0,0,0,0.0,0,,False
+pdl1_cyc_2_sample2_afcyc_pred,smoke_afcyc,results/PDL1/smoke/afcyc/pdl1_cyc_2_sample2_afcyc_pred.pdb,B,A,11,1,0.0357,0,0,0,0.0,0,,False
+pdl1_cyc_3_sample1_afcyc_pred,smoke_afcyc,results/PDL1/smoke/afcyc/pdl1_cyc_3_sample1_afcyc_pred.pdb,B,A,10,0,0.0,0,0,0,0.0,0,,False
+pdl1_cyc_3_sample2_afcyc_pred,smoke_afcyc,results/PDL1/smoke/afcyc/pdl1_cyc_3_sample2_afcyc_pred.pdb,B,A,12,0,0.0,0,0,0,0.0,0,,False
+pdl1_cyc_4_sample1_afcyc_pred,smoke_afcyc,results/PDL1/smoke/afcyc/pdl1_cyc_4_sample1_afcyc_pred.pdb,B,A,10,0,0.0,0,0,0,0.0,0,,False
+pdl1_cyc_4_sample2_afcyc_pred,smoke_afcyc,results/PDL1/smoke/afcyc/pdl1_cyc_4_sample2_afcyc_pred.pdb,B,A,12,0,0.0,0,0,0,0.0,0,,False
+pdl1_cyc_5_sample1_afcyc_pred,smoke_afcyc,results/PDL1/smoke/afcyc/pdl1_cyc_5_sample1_afcyc_pred.pdb,B,A,12,0,0.0,0,0,0,0.0,0,,False
+pdl1_cyc_5_sample2_afcyc_pred,smoke_afcyc,results/PDL1/smoke/afcyc/pdl1_cyc_5_sample2_afcyc_pred.pdb,B,A,11,0,0.0,0,0,0,0.0,0,,False
+pdl1_cyc_6_sample1_afcyc_pred,smoke_afcyc,results/PDL1/smoke/afcyc/pdl1_cyc_6_sample1_afcyc_pred.pdb,B,A,15,0,0.0,0,0,0,0.0,0,,False
+pdl1_cyc_6_sample2_afcyc_pred,smoke_afcyc,results/PDL1/smoke/afcyc/pdl1_cyc_6_sample2_afcyc_pred.pdb,B,A,14,0,0.0,0,0,0,0.0,0,,False
+pdl1_cyc_7_sample1_afcyc_pred,smoke_afcyc,results/PDL1/smoke/afcyc/pdl1_cyc_7_sample1_afcyc_pred.pdb,B,A,11,0,0.0,0,0,0,0.0,0,,False
+pdl1_cyc_7_sample2_afcyc_pred,smoke_afcyc,results/PDL1/smoke/afcyc/pdl1_cyc_7_sample2_afcyc_pred.pdb,B,A,11,0,0.0,0,0,0,0.0,0,,False

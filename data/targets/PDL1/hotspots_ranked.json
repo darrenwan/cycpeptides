@@ -1,0 +1,116 @@
+{
+  "target": "PD-L1",
+  "uniprot": "Q9NZQ7",
+  "numbering_reference": "UniProt_IgV_as_in_7OUN_chain_A",
+  "accessed": "2026-09-22",
+  "source_analysis": "results/PDL1/hotspot_consensus.json",
+  "core_hotspots_rfdiffusion": [
+    {
+      "res": 56,
+      "aa": "TYR",
+      "rf": "A56",
+      "macro_n": 5,
+      "tier": "core_required",
+      "pd1_pairs": 18
+    },
+    {
+      "res": 123,
+      "aa": "TYR",
+      "rf": "A123",
+      "macro_n": 5,
+      "tier": "core_required",
+      "pd1_pairs": 55
+    },
+    {
+      "res": 115,
+      "aa": "MET",
+      "rf": "A115",
+      "macro_n": 5,
+      "tier": "core_required",
+      "pd1_pairs": 9
+    },
+    {
+      "res": 113,
+      "aa": "ARG",
+      "rf": "A113",
+      "macro_n": 5,
+      "tier": "core_required",
+      "pd1_pairs": 17
+    },
+    {
+      "res": 66,
+      "aa": "GLN",
+      "rf": "A66",
+      "macro_n": 5,
+      "tier": "core_required",
+      "pd1_pairs": 23
+    },
+    {
+      "res": 121,
+      "aa": "ALA",
+      "rf": "A121",
+      "macro_n": 4,
+      "tier": "core_required",
+      "pd1_pairs": 15
+    }
+  ],
+  "differentiation_growth_hotspots": [
+    {
+      "res": 125,
+      "aa": "ARG",
+      "reason": "pd1_gap_opportunity",
+      "pd1_pairs": 16,
+      "macro_n": 1,
+      "ab_n": 3
+    },
+    {
+      "res": 124,
+      "aa": "LYS",
+      "reason": "pd1_gap_opportunity",
+      "pd1_pairs": 27,
+      "macro_n": 1,
+      "ab_n": 1
+    },
+    {
+      "res": 26,
+      "aa": "ASP",
+      "reason": "pd1_gap_opportunity",
+      "pd1_pairs": 7,
+      "macro_n": 0,
+      "ab_n": 1
+    },
+    {
+      "res": 19,
+      "aa": "PHE",
+      "reason": "pd1_gap_opportunity",
+      "pd1_pairs": 7,
+      "macro_n": 0,
+      "ab_n": 0
+    }
+  ],
+  "recommended_rf_string_tier1": [
+    "A56",
+    "A123",
+    "A115",
+    "A113",
+    "A66",
+    "A121"
+  ],
+  "blockade_filter_residues": [
+    {
+      "res": 122,
+      "aa": "ASP",
+      "why": "PD-1 dense; polar rim"
+    },
+    {
+      "res": 124,
+      "aa": "LYS",
+      "why": "PD-1 2nd densest; macro-light"
+    },
+    {
+      "res": 125,
+      "aa": "ARG",
+      "why": "PD-1 + Abs; BMS salt-bridge \u2014 redesign chemically"
+    }
+  ]
+}

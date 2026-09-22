@@ -1,0 +1,17 @@
+# Ignore bulk / secrets so `docker build` context stays small for afcyc/pyrosetta.
+.venv/
+.git/
+**/__pycache__/
+*.pyc
+results/
+data/
+docs/
+models/rfdiffusion/
+models/afcyc/params/
+models/afcyc/*.tar
+models/academic/*.whl
+third_party/ProteinMPNN/vanilla_model_weights/
+*.pt
+*.pdb
+*.trb
+*.log

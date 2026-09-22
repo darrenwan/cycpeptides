@@ -1,0 +1,20 @@
+[project]
+name = "cycpeptides"
+version = "0.1.0"
+description = "Dry-lab AI cyclic peptide design (PD-L1 campaign)"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "biopython>=1.83",
+  "numpy>=1.26",
+  "pandas>=2.1",
+  "pyyaml>=6.0",
+]
+
+[dependency-groups]
+dev = [
+  "ruff>=0.6",
+]
+
+[tool.uv]
+package = false

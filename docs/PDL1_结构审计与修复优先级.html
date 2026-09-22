@@ -1,0 +1,757 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>
+  :root{color-scheme:light dark;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+  body{margin:0;background:#F4F6F7}
+  @media (prefers-color-scheme: dark){ body{background:#0D1214} }
+  img{max-width:100%} [hidden]{display:none!important}
+</style>
+</head>
+<body>
+<title>PD-L1 战役审计</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --ground:#F4F6F7; --surface:#FFFFFF; --surface-2:#EBF0F1;
+    --ink:#131A1D; --ink-2:#46555B; --ink-3:#6E8087;
+    --line:#D8E0E2; --line-2:#BFCACD;
+    --accent:#0B6B72; --accent-soft:#DAEAEB;
+    --crit:#A8261C; --crit-soft:#F7E2E0;
+    --warn:#855C00; --warn-soft:#F6EBD2;
+    --ok:#1B6B45; --ok-soft:#DBEDE4;
+    --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+    --sans:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    --serif:"Newsreader",Georgia,"Times New Roman",serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ground:#0D1214; --surface:#151C1F; --surface-2:#1C2529;
+      --ink:#E4EAEC; --ink-2:#A4B3B8; --ink-3:#7E8F95;
+      --line:#2A3539; --line-2:#3B484D;
+      --accent:#4FBFC6; --accent-soft:#123035;
+      --crit:#F08A80; --crit-soft:#341B19;
+      --warn:#DCA94D; --warn-soft:#30250F;
+      --ok:#5FC08C; --ok-soft:#16301F;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#0D1214; --surface:#151C1F; --surface-2:#1C2529;
+    --ink:#E4EAEC; --ink-2:#A4B3B8; --ink-3:#7E8F95;
+    --line:#2A3539; --line-2:#3B484D;
+    --accent:#4FBFC6; --accent-soft:#123035;
+    --crit:#F08A80; --crit-soft:#341B19;
+    --warn:#DCA94D; --warn-soft:#30250F;
+    --ok:#5FC08C; --ok-soft:#16301F;
+  }
+
+  body{
+    background:var(--ground); color:var(--ink);
+    font-family:var(--sans); font-size:16px; line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{
+    max-width:960px; margin:0 auto;
+    padding-inline:20px; padding-block:0 72px;
+  }
+
+  /* ---------- masthead ---------- */
+  .mast{
+    border-bottom:1px solid var(--line);
+    padding-block:44px 26px;
+    display:flex; flex-direction:column; gap:18px;
+  }
+  .kicker{
+    font-family:var(--mono); font-size:11.5px; font-weight:500;
+    letter-spacing:.13em; text-transform:uppercase; color:var(--accent);
+    display:flex; align-items:center; gap:10px;
+  }
+  .kicker::after{content:""; flex:1; height:1px; background:var(--line);}
+  h1{
+    font-family:var(--serif); font-weight:600; font-size:clamp(2.1rem,5.4vw,3.1rem);
+    line-height:1.1; letter-spacing:-.015em; text-wrap:balance; margin:0;
+  }
+  .standfirst{
+    font-family:var(--serif); font-size:clamp(1.06rem,2.3vw,1.24rem);
+    line-height:1.55; color:var(--ink-2); max-width:62ch; margin:0;
+  }
+  .metaline{
+    display:flex; flex-wrap:wrap; gap:8px 20px;
+    font-family:var(--mono); font-size:12px; color:var(--ink-3);
+  }
+  .metaline b{color:var(--ink-2); font-weight:500;}
+
+  /* ---------- verdict strip ---------- */
+  .scores{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(178px,1fr));
+    gap:1px; background:var(--line); border:1px solid var(--line);
+    border-radius:3px; overflow:hidden; margin-block:30px 0;
+  }
+  .score{background:var(--surface); padding:16px 18px 18px; display:flex; flex-direction:column; gap:5px;}
+  .score .dim{font-family:var(--mono); font-size:11px; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3);}
+  .score .val{font-family:var(--serif); font-size:2rem; font-weight:600; line-height:1; letter-spacing:-.02em;}
+  .score .note{font-size:13px; line-height:1.42; color:var(--ink-2);}
+  .g-a{color:var(--ok);} .g-b{color:var(--accent);} .g-c{color:var(--warn);} .g-d{color:var(--crit);}
+
+  /* ---------- prose ---------- */
+  section{padding-block:38px 0;}
+  h2{
+    font-family:var(--serif); font-weight:600; font-size:clamp(1.42rem,3.2vw,1.78rem);
+    line-height:1.22; letter-spacing:-.012em; text-wrap:balance;
+    margin:0 0 6px; display:flex; align-items:baseline; gap:12px; flex-wrap:wrap;
+  }
+  h3{
+    font-family:var(--sans); font-weight:600; font-size:1.02rem;
+    line-height:1.4; margin:26px 0 8px; letter-spacing:-.005em;
+  }
+  p{margin:0 0 14px; max-width:74ch;}
+  .lede{color:var(--ink-2);}
+  ul,ol{margin:0 0 14px; padding-left:1.35em; max-width:74ch;}
+  li{margin-bottom:7px;}
+  li::marker{color:var(--ink-3);}
+  strong{font-weight:600;}
+  code{
+    font-family:var(--mono); font-size:.855em; background:var(--surface-2);
+    padding:.12em .38em; border-radius:3px; border:1px solid var(--line);
+    white-space:nowrap;
+  }
+  a{color:var(--accent); text-underline-offset:2px;}
+  a:focus-visible,summary:focus-visible{outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;}
+
+  /* ---------- severity marker ---------- */
+  .sev{
+    font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:.08em;
+    padding:2px 8px; border-radius:2px; text-transform:uppercase;
+    border:1px solid currentColor; line-height:1.65; flex:none;
+  }
+  .sev-p0{color:var(--crit); background:var(--crit-soft);}
+  .sev-p1{color:var(--warn); background:var(--warn-soft);}
+  .sev-p2{color:var(--ink-2); background:var(--surface-2);}
+
+  /* ---------- callout ---------- */
+  .callout{
+    border-left:3px solid var(--crit); background:var(--crit-soft);
+    padding:18px 20px; border-radius:0 3px 3px 0; margin:20px 0;
+  }
+  .callout.acc{border-left-color:var(--accent); background:var(--accent-soft);}
+  .callout.ok{border-left-color:var(--ok); background:var(--ok-soft);}
+  .callout p:last-child{margin-bottom:0;}
+  .callout .big{
+    font-family:var(--mono); font-size:clamp(1.3rem,4vw,1.72rem); font-weight:600;
+    letter-spacing:-.02em; line-height:1.25; display:block; margin-bottom:6px;
+    font-variant-numeric:tabular-nums;
+  }
+
+  /* ---------- tables ---------- */
+  .tbox{
+    overflow-x:auto; margin:18px 0; border:1px solid var(--line);
+    border-radius:3px; background:var(--surface);
+  }
+  table{border-collapse:collapse; width:100%; font-size:13.4px;}
+  caption{
+    caption-side:top; text-align:left; padding:11px 14px;
+    font-family:var(--mono); font-size:11px; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--ink-3);
+    border-bottom:1px solid var(--line); background:var(--surface-2);
+  }
+  th,td{
+    padding:8px 13px; text-align:left; border-bottom:1px solid var(--line);
+    white-space:nowrap; vertical-align:baseline;
+  }
+  thead th{
+    font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:.05em;
+    text-transform:uppercase; color:var(--ink-3); background:var(--surface-2);
+    border-bottom:1px solid var(--line-2);
+  }
+  tbody tr:last-child td{border-bottom:none;}
+  td.num,th.num{text-align:right; font-family:var(--mono); font-variant-numeric:tabular-nums; font-size:12.6px;}
+  td.mono{font-family:var(--mono); font-size:12.4px;}
+  .zero{color:var(--crit);}
+  .pass{color:var(--ok); font-weight:600;}
+  .tfoot td{
+    background:var(--surface-2); font-weight:600; border-top:1px solid var(--line-2);
+    border-bottom:none;
+  }
+  .swatch{
+    display:inline-block; width:7px; height:7px; border-radius:50%;
+    margin-right:7px; vertical-align:middle; flex:none;
+  }
+
+  /* ---------- figure ---------- */
+  figure{margin:22px 0;}
+  .figbox{
+    border:1px solid var(--line); border-radius:3px; background:var(--surface);
+    padding:18px 12px; overflow-x:auto;
+  }
+  .figbox svg{display:block; width:100%; min-width:660px; height:auto; color:var(--ink);}
+  figcaption{
+    margin-top:11px; font-size:13.2px; line-height:1.5; color:var(--ink-2);
+    max-width:74ch;
+  }
+  figcaption b{color:var(--ink);}
+
+  /* ---------- fix list ---------- */
+  .fixes{list-style:none; padding:0; margin:20px 0; display:flex; flex-direction:column; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:3px; overflow:hidden;}
+  .fixes li{
+    background:var(--surface); padding:14px 17px; margin:0;
+    display:grid; grid-template-columns:26px 1fr; gap:14px; align-items:start;
+  }
+  .fixes .n{
+    font-family:var(--mono); font-size:12px; font-weight:600; color:var(--accent);
+    padding-top:2px; font-variant-numeric:tabular-nums;
+  }
+  .fixes .t{font-weight:600;}
+  .fixes .d{color:var(--ink-2); font-size:13.6px; line-height:1.5;}
+
+  /* ---------- misc ---------- */
+  .rule{height:1px; background:var(--line); border:0; margin:0;}
+  .tag{
+    font-family:var(--mono); font-size:11px; padding:1px 7px; border-radius:2px;
+    background:var(--surface-2); color:var(--ink-2); border:1px solid var(--line);
+    white-space:nowrap;
+  }
+  .good{display:flex; flex-direction:column; gap:14px; margin:18px 0;}
+  .good .item{border-left:2px solid var(--ok); padding-left:15px;}
+  .good .h{font-weight:600; margin-bottom:3px;}
+  .good .b{color:var(--ink-2); font-size:13.8px; line-height:1.55; margin:0;}
+  footer{
+    margin-top:52px; padding-top:22px; border-top:1px solid var(--line);
+    font-family:var(--mono); font-size:11.5px; color:var(--ink-3); line-height:1.7;
+  }
+  @media (max-width:520px){
+    h2{flex-direction:column; gap:7px;}
+    th,td{padding:7px 10px;}
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="mast">
+    <div class="kicker">cycpeptides · PD-L1 大环肽干实验</div>
+    <h1>结构审计与修复优先级</h1>
+    <p class="standfirst">
+      对 S0–S2 三层管线（校准 / 三阶段生成 / 评分）的逐环核查。技术选型与门控哲学是内行的，
+      但评分链路存在一处编号契约断裂，使 S2 的全部指标失效——报告中的 PASS 是假阳性。
+    </p>
+    <div class="metaline">
+      <span><b>核查范围</b> scripts/ · data/targets/PDL1/ · results/PDL1/ · docker/</span>
+      <span><b>日期</b> 2026-09-22</span>
+      <span><b>阻断项</b> 1</span>
+    </div>
+  </header>
+
+  <div class="scores">
+    <div class="score">
+      <span class="dim">科学设计</span>
+      <span class="val g-a">A−</span>
+      <span class="note">技术栈选型、门控哲学、对照结构都是内行做法</span>
+    </div>
+    <div class="score">
+      <span class="dim">科学执行</span>
+      <span class="val g-d">D</span>
+      <span class="note">编号错位，S2 指标全部失效，PASS 为假阳性</span>
+    </div>
+    <div class="score">
+      <span class="dim">工程架构</span>
+      <span class="val g-b">B+</span>
+      <span class="note">uv / Docker 分层、资产自包含、镜像 pin 干净</span>
+    </div>
+    <div class="score">
+      <span class="dim">工程严谨</span>
+      <span class="val g-c">C</span>
+      <span class="note">DoD 只验文件非空，不验数值；无 VCS、无自检</span>
+    </div>
+  </div>
+
+  <section>
+    <div class="callout">
+      <span class="big">P0 通过：报告 0/16 &nbsp;→&nbsp; 实际 16/16</span>
+      <p>
+        S2 冒烟中 <code>pass_P0 = 0/16</code> 不是"设计质量差"，是<strong>算错了</strong>。
+        修正编号后，同一批 AfCyc 预测结构有 16 条全部通过主门控，jaccard 落在
+        0.30–0.52——而晶体阳性基线是 0.29–0.67。
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="sev sev-p0">P0</span> 编号契约断裂</h2>
+    <p class="lede">
+      阻断性缺陷。修复前，<code>pdl1_blockade_metrics.py:35</code> 的
+      <code>RIM_RESIDUES = (122, 124, 125)</code> 与 footprint 集合都按
+      <strong>UniProt IgV 编号</strong>书写，而它实际接收到的 PD-L1 链已被
+      <strong>归零重编号为 1..117</strong>。查不到残基 → 静默返回 0。
+    </p>
+
+    <div class="tbox">
+      <table>
+        <caption>修复前 vs 修复后 · 同一批 AfCyc 预测结构（4 例抽样）</caption>
+        <thead>
+          <tr>
+            <th>结构</th>
+            <th class="num">现状 jaccard</th>
+            <th class="num">修正后</th>
+            <th class="num">D122</th>
+            <th class="num">K124</th>
+            <th class="num">R125</th>
+            <th class="num">rim_score</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="mono">pdl1_cyc_0_sample1</td><td class="num zero">0.0000</td><td class="num pass">0.4167</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0.000</td></tr>
+          <tr><td class="mono">pdl1_cyc_0_sample2</td><td class="num zero">0.0000</td><td class="num pass">0.4400</td><td class="num">1</td><td class="num">0</td><td class="num">0</td><td class="num">0.016</td></tr>
+          <tr><td class="mono">pdl1_cyc_1_sample1</td><td class="num zero">0.0000</td><td class="num pass">0.3636</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0.000</td></tr>
+          <tr><td class="mono">pdl1_cyc_1_sample2</td><td class="num zero">0.0000</td><td class="num pass">0.4500</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0.000</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>根因：编号在两个阶段之间连续丢失两次</h3>
+  </section>
+
+  <figure>
+    <div class="figbox">
+      <svg viewBox="0 0 880 424" role="img" aria-label="校准路径使用自带 UniProt 编号的晶体结构因而指标正常；设计路径中受体编号经 RFpeptides 偏移 −5、AfCycDesign 归零为 1..117，度量层仍按 UniProt 编号查 122/124/125，落在链尾之外而返回 0">
+        <defs>
+          <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/>
+          </marker>
+          <marker id="arR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--ok)"/>
+          </marker>
+        </defs>
+
+        <!-- ============ S1 lane ============ -->
+        <text x="6" y="17" font-family="var(--mono)" font-size="11.5" font-weight="600" letter-spacing=".06em" fill="var(--ok)">S1 校准路径 — 晶体自带 UniProt 编号，度量层查得到</text>
+
+        <g font-family="var(--mono)" font-size="11.5">
+          <!-- row 1 -->
+          <rect x="6" y="28" width="158" height="27" rx="2" fill="var(--surface-2)" stroke="var(--line)"/>
+          <text x="16" y="45.5" fill="var(--ink-2)">7OUN.pdb  A:18..134</text>
+          <line x1="172" y1="41.5" x2="196" y2="41.5" stroke="currentColor" stroke-width="1.2" marker-end="url(#ar)"/>
+          <rect x="202" y="28" width="150" height="27" rx="2" fill="var(--surface-2)" stroke="var(--line)"/>
+          <text x="212" y="45.5" fill="var(--ink-2)">score_complex()</text>
+          <line x1="360" y1="41.5" x2="384" y2="41.5" stroke="currentColor" stroke-width="1.2" marker-end="url(#ar)"/>
+          <rect x="390" y="28" width="196" height="27" rx="2" fill="var(--ok-soft)" stroke="var(--ok)"/>
+          <text x="400" y="45.5" fill="var(--ok)" font-weight="600">jaccard 0.6667 · 命中</text>
+
+          <!-- row 2 -->
+          <rect x="6" y="63" width="158" height="27" rx="2" fill="var(--surface-2)" stroke="var(--line)"/>
+          <text x="16" y="80.5" fill="var(--ink-2)">8ALX.pdb  A:20..134</text>
+          <line x1="172" y1="76.5" x2="196" y2="76.5" stroke="currentColor" stroke-width="1.2" marker-end="url(#ar)"/>
+          <rect x="202" y="63" width="150" height="27" rx="2" fill="var(--surface-2)" stroke="var(--line)"/>
+          <text x="212" y="80.5" fill="var(--ink-2)">score_complex()</text>
+          <line x1="360" y1="76.5" x2="384" y2="76.5" stroke="currentColor" stroke-width="1.2" marker-end="url(#ar)"/>
+          <rect x="390" y="63" width="196" height="27" rx="2" fill="var(--ok-soft)" stroke="var(--ok)"/>
+          <text x="400" y="80.5" fill="var(--ok)" font-weight="600">jaccard 0.4400 · 命中</text>
+
+          <text x="600" y="53" font-size="11" fill="var(--ink-3)">阈值 0.15 由此校准</text>
+          <text x="600" y="88" font-size="11" fill="var(--ink-3)">→ 真值</text>
+        </g>
+
+        <line x1="6" y1="112" x2="874" y2="112" stroke="var(--line)"/>
+
+        <!-- ============ S2 lane ============ -->
+        <text x="6" y="139" font-family="var(--mono)" font-size="11.5" font-weight="600" letter-spacing=".06em" fill="var(--crit)">S2 设计路径 — 每级重建结构，受体编号被两次重写</text>
+
+        <g font-family="var(--mono)">
+          <!-- stage boxes -->
+          <g>
+            <rect x="6" y="156" width="180" height="60" rx="2" fill="var(--surface-2)" stroke="var(--line)"/>
+            <text x="18" y="176" font-size="11.5" fill="var(--ink-3)" font-family="var(--sans)">裁剪受体</text>
+            <text x="18" y="200" font-size="14" font-weight="600" fill="var(--ink)">A: 18..134</text>
+          </g>
+          <line x1="190" y1="186" x2="226" y2="186" stroke="currentColor" stroke-width="1.3" marker-end="url(#ar)"/>
+          <text x="200" y="178" font-size="11.5" font-weight="600" fill="var(--warn)">−5</text>
+
+          <g>
+            <rect x="232" y="156" width="180" height="60" rx="2" fill="var(--surface-2)" stroke="var(--line)"/>
+            <text x="244" y="176" font-size="11.5" fill="var(--ink-3)" font-family="var(--sans)">RFpeptides</text>
+            <text x="244" y="200" font-size="14" font-weight="600" fill="var(--warn)">B: 13..129</text>
+          </g>
+          <line x1="416" y1="186" x2="452" y2="186" stroke="currentColor" stroke-width="1.3" marker-end="url(#ar)"/>
+          <text x="428" y="178" font-size="11.5" font-weight="600" fill="var(--ink-3)">±0</text>
+
+          <g>
+            <rect x="458" y="156" width="180" height="60" rx="2" fill="var(--surface-2)" stroke="var(--line)"/>
+            <text x="470" y="176" font-size="11.5" fill="var(--ink-3)" font-family="var(--sans)">ProteinMPNN（只换序列）</text>
+            <text x="470" y="200" font-size="14" font-weight="600" fill="var(--warn)">B: 13..129</text>
+          </g>
+          <line x1="642" y1="186" x2="678" y2="186" stroke="currentColor" stroke-width="1.3" marker-end="url(#ar)"/>
+          <text x="650" y="178" font-size="11.5" font-weight="600" fill="var(--crit)">−17</text>
+
+          <g>
+            <rect x="684" y="156" width="190" height="60" rx="2" fill="var(--crit-soft)" stroke="var(--crit)"/>
+            <text x="696" y="176" font-size="11.5" fill="var(--crit)" font-family="var(--sans)">AfCycDesign（重建）</text>
+            <text x="696" y="200" font-size="14" font-weight="600" fill="var(--crit)">B: 1..117</text>
+          </g>
+        </g>
+
+        <!-- ============ ruler comparison ============ -->
+        <text x="6" y="252" font-family="var(--mono)" font-size="11" font-weight="600" letter-spacing=".06em" fill="var(--ink-3)">度量层的坐标系对比（同一比例尺）</text>
+
+        <g font-family="var(--mono)" font-size="11">
+          <!-- Bar A : UniProt 18..134 -->
+          <text x="6" y="278" fill="var(--ink-2)">阈值坐标系</text>
+          <text x="6" y="292" fill="var(--ink-3)" font-size="10.5">UniProt IgV</text>
+          <rect x="130" y="270" width="685" height="20" rx="2" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1"/>
+          <rect x="738" y="270" width="25" height="20" fill="var(--accent)" opacity=".55"/>
+          <text x="750" y="264" fill="var(--accent)" font-size="11" text-anchor="middle" font-weight="600">122–125</text>
+          <text x="136" y="284" fill="var(--accent)" font-size="10.5">18</text>
+          <text x="808" y="284" fill="var(--accent)" font-size="10.5">134</text>
+
+          <!-- Bar B : AfCyc 1..117 -->
+          <text x="6" y="326" fill="var(--ink-2)">AfCyc 输出</text>
+          <text x="6" y="340" fill="var(--ink-3)" font-size="10.5">链 B，归零</text>
+          <rect x="30" y="318" width="685" height="20" rx="2" fill="var(--crit-soft)" stroke="var(--crit)" stroke-width="1"/>
+          <rect x="637" y="318" width="25" height="20" fill="var(--crit)" opacity=".5"/>
+          <text x="36" y="332" fill="var(--crit)" font-size="10.5">1</text>
+          <text x="706" y="332" fill="var(--crit)" font-size="10.5">117</text>
+          <text x="622" y="352" fill="var(--crit)" font-size="10.5">实际落点 105/107/108</text>
+        </g>
+
+        <!-- lookup line -->
+        <line x1="750" y1="256" x2="750" y2="404" stroke="var(--crit)" stroke-width="1.4" stroke-dasharray="4 3"/>
+        <circle cx="750" cy="400" r="7" fill="none" stroke="var(--crit)" stroke-width="1.6"/>
+        <line x1="745.5" y1="395.5" x2="754.5" y2="404.5" stroke="var(--crit)" stroke-width="1.6"/>
+        <line x1="754.5" y1="395.5" x2="745.5" y2="404.5" stroke="var(--crit)" stroke-width="1.6"/>
+        <text x="768" y="400" font-family="var(--mono)" font-size="11" font-weight="600" fill="var(--crit)">越出链尾</text>
+        <text x="768" y="414" font-family="var(--mono)" font-size="10.5" fill="var(--crit)">→ 返回 0</text>
+
+        <path d="M 650 344 L 650 368 L 736 368" fill="none" stroke="var(--crit)" stroke-width="1.1" opacity=".5"/>
+      </svg>
+    </div>
+    <figcaption>
+      <b>编号契约在哪里断掉。</b>
+      裁剪受体刻意采用 UniProt 编号（18..134）以对齐 7OUN/5O45；RFpeptides 输出偏移 −5，
+      AfCycDesign 重建复合物时再次归零。度量层仍以
+      <code>122/124/125</code> 查找，而该链只到 117——落点其实在 105/107/108，<code>get_res()</code> 因此返回 <code>None</code>，指标静默记 0。
+      校准路径不受影响，因为晶体结构自带正确编号。
+    </figcaption>
+  </figure>
+
+  <section>
+    <h3>为什么这个 bug 躲过了三层检查</h3>
+    <ul>
+      <li>
+        <strong>binder 链恰好是巧合。</strong> 设计的环肽在 RFpeptides 与 AfCyc 两处都是
+        <code>1..12</code>（原始设计就从 1 开始），只有 PD-L1 链移位。看起来就像
+        "只有 target 链的指标偏低"，而不像坐标系错误。
+      </li>
+      <li>
+        <strong>S1 校准拦不住。</strong> 校准跑的是晶体结构（7OUN <code>18..134</code>、
+        8ALX <code>20..134</code>、5O45 <code>17..145</code>），它们天生带 UniProt 编号，
+        所以 <code>min_positive_jaccard = 0.2917</code> 是<strong>真值</strong>。
+        设计侧走归零编号——校准与评分实际用了两套坐标系，而两侧都没有断言坐标系一致。
+      </li>
+      <li>
+        <strong>DoD 只验存在性。</strong> <code>pdl1_smoke_score.py</code> 只断言
+        <code>len(df) &gt;= 1</code> 与数据源为 AfCyc 预测——0/16 通过照样报 PASS。
+        这是本次事故的直接放行者。
+      </li>
+    </ul>
+
+    <div class="callout acc">
+      <p>
+        <strong>一个反证：</strong>现状表格并非整列全零，
+        <code>pdl1_cyc_2_sample1/2</code> 的 jaccard 为 0.0400 / 0.0357。
+        原因是那些结构的<strong>局部</strong>残基 56（真实 73）通过绝对编号巧合撞上了
+        footprint 中的 56。这种"偶尔非零"比整列全零更危险——它让错误看起来像信号。
+      </p>
+    </div>
+
+    <h3>修复方案</h3>
+    <p>
+      不要在每级 Docker 阶段外面补 <code>+17</code>——那是脆弱且必然再犯的做法。应在
+      <strong>度量层做序列锚定的编号归一</strong>：
+    </p>
+    <ol>
+      <li>在 <code>pdl1_blockade_metrics.py</code> 增加 <code>resolve_numbering(structure, ref_seq)</code>，
+        用参考受体序列对齐目标链，建立 局部 → UniProt 映射，由 <code>score_complex()</code> 内部统一转换。</li>
+      <li>增加<strong>不变量断言</strong>：目标链残基数或序列与参考不符时直接抛错，而不是静默算 0。</li>
+      <li>增加 <code>scripts/pdl1_selftest_metrics.py</code>：把 8ALX / 7OUN 晶体经由
+        <code>score_complex()</code> 跑一遍，断言 jaccard 等于校准值（0.4400 / 0.6667）。
+        <strong>这一个自检就能立刻抓到本次事故。</strong></li>
+    </ol>
+    <p class="lede">
+      已实测映射可靠：AfCyc 输出链 B 与裁剪受体的 117 个残基序列
+      <strong>逐一对齐（117/117 完全一致）</strong>，因此序列锚定的偏移量是唯一解，可安全自动化。
+    </p>
+  </section>
+
+  <section>
+    <h2><span class="sev sev-p1">P1</span> 科学问题</h2>
+
+    <h3>1 · 阴性对照是"不可能失败"的对照</h3>
+    <p>
+      <code>n_negatives = 4</code> 全部为合成负例：3 个把肽平移 +50 Å 的 decoy，加 1 个 apo。
+      <code>max_negative_jaccard = 0.0</code>、<code>min_positive = 0.2917</code>，
+      "完美可分"是<strong>必然的</strong>，不构成对 <code>T = 0.15</code> 的有效验证——
+      平移 50 Å 的肽当然不接触界面。要证明该阈值有判别力，需要真负例：
+    </p>
+    <ul>
+      <li>AfCyc 预测的<strong>打乱序列</strong>肽（同长度、同骨架，非设计序列）</li>
+      <li>结合 PD-L1 <strong>非 PD-1 面</strong>的肽（IgC 域、5X8M 型表位）</li>
+      <li>其他靶点的环肽</li>
+    </ul>
+    <p class="lede">
+      否则 0.15 是从"能接触界面"到"完全脱离"的中点，而不是"阻断 PD-1"的判据。
+    </p>
+
+    <h3>2 · 30% 多样性配额在当前定义下无法执行</h3>
+    <p>
+      <code>rmsd_vs_8alx</code> 要求肽等长（<code>len(ref_pep) != len(mov_pep) → None</code>）。
+      实测 8ALX 的 pAC65 是 <strong>15 残基</strong>（7 个标准残基 + 8 个非标准残基
+      <code>MAA/DPP/HYP/DAB/V6W/9KK×2/CCS</code>，其中 CCS 同时是环化桥），
+      而 RFpeptides 输出为 <strong>12/14/15/16 残基</strong>。
+    </p>
+    <p>
+      <code>rmsd_vs_8alx</code> 对轨道 A <strong>几乎恒为 None</strong>
+      （<code>smoke_metrics.csv</code> 整列为空印证了这点），S5 的
+      <code>high_rmsd_quota_frac: 0.3</code> 因此无法运行——而"反向环 / 偏心遮挡"
+      正是本项目声称的核心差异化主轴。需要长度无关的几何差异度量：受体界面 CA 对齐后，
+      取肽质心偏移向量与主轴朝向角（或 5O4Y 那条 Group II 反向环的环方向指纹）。
+    </p>
+
+    <h3>3 · 自洽性检查目前是同义反复</h3>
+    <p>
+      <code>pep_ca_rmsd_vs_design ≈ 0.28 Å</code> 被冒烟报告当作 PASS 证据，但
+      <code>pdl1_smoke_afcyc.sh</code> 硬编码了 <code>--use_binder_template 1</code>——
+      骨架作为模板喂入，0.28 Å 只说明"跟了模板"，不是独立验证。
+      真正的自洽性检查要么关模板重跑，要么换 HighFold 做<strong>第二模型共识</strong>
+      （设计文档本就写了双模型，只是没做）。
+    </p>
+
+    <h3>4 · 漏斗的后两层门控完全空转</h3>
+    <p>
+      <code>design_spec.yaml §2.3</code> 的度量契约要求
+      <code>ipae / iptm / iface_plddt / ddg / cms / sap</code>。实际情况：
+    </p>
+    <ul>
+      <li><code>score_complex()</code> 一个都不产出；</li>
+      <li><code>afcyc_summary.json</code> 里<strong>已有</strong>
+        <code>plddt 0.868 / ptm 0.781 / i_ptm 0.636</code>，却<strong>从未 join 进</strong>
+        <code>smoke_metrics.csv</code>；</li>
+      <li>Rosetta 那条线（<code>pdl1-pyrosetta</code> 镜像）建好了，但没接进任何脚本。</li>
+    </ul>
+    <p>
+      结果：<code>pass_struct</code> 与 <code>pass_physics</code> 在 S2 里是空转的，
+      <code>eligible</code> 实际只由 P0 决定。补一个 join 步骤即可立刻激活第一层。
+    </p>
+
+    <h3>5 · 主门控是集合重叠，不是遮挡</h3>
+    <p>
+      设计文档承诺"Jaccard <strong>或</strong>体积遮挡"，实现只有 Jaccard。
+      集合重叠对"接触了正确残基但姿态不阻断"的设计无判别力。真正的遮挡度量——
+      肽原子与 PD-1 结合位点原子的重叠体积，或与 4ZQK 的姿态冲突数——才是机制读出。
+      这是 P0 门控科学性的核心缺口。
+    </p>
+
+    <h3>6 · 5O4Y 的阳性归类与差异化主轴冲突</h3>
+    <p>
+      5O4Y 被当作<strong>足迹阻断阳性</strong>（jaccard 0.2917，五者最低），但
+      <code>hotspots.json</code> 与设计文档都把它的意义定义为 <strong>Group II 反向环</strong>——
+      那属于"多样性"主轴，不是"更接近 PD-1 姿态"。用反向环结构校准"阻断"阈值，
+      会把门控推向单一几何。建议移出阳性集，改作多样性参考。
+    </p>
+  </section>
+
+  <section>
+    <h2><span class="sev sev-p1">P1</span> 工程问题</h2>
+    <div class="tbox">
+      <table>
+        <caption>工程缺陷清单</caption>
+        <thead>
+          <tr><th>问题</th><th>位置</th><th>影响</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>DoD 只验存在性</strong></td>
+            <td class="mono">pdl1_smoke_score.py:110</td>
+            <td style="white-space:normal">只断言表非空与来源正确 → 0/16 通过被报成 PASS</td>
+          </tr>
+          <tr>
+            <td><strong>无版本控制</strong></td>
+            <td class="mono">仓库根</td>
+            <td style="white-space:normal">数据溯源极细，代码却无 VCS；修复后无法 diff、无法回溯结果版本</td>
+          </tr>
+          <tr>
+            <td><strong>链角色靠猜</strong></td>
+            <td class="mono">pdl1_smoke_score.py:23</td>
+            <td style="white-space:normal">硬编码 <code>("B", ["A"])</code>，无视 summary 中已有的权威 <code>pred_chain_map</code></td>
+          </tr>
+          <tr>
+            <td><strong>绝对路径残留</strong></td>
+            <td class="mono">pdl1_hotspot_consensus.py:25</td>
+            <td style="white-space:normal">唯一违反"脚本自定位"约定的文件</td>
+          </tr>
+          <tr>
+            <td><strong>无测试</strong></td>
+            <td class="mono">—</td>
+            <td style="white-space:normal">建议至少补晶体自检；其余用阶段重跑做回归是合理的</td>
+          </tr>
+          <tr>
+            <td><strong>END 行剥离脆弱</strong></td>
+            <td class="mono">pdl1_prepare_receptor.py:write_pdb</td>
+            <td style="white-space:normal">按前缀过滤，REMARK 内容含 "END" 会被误删</td>
+          </tr>
+          <tr>
+            <td><strong>脏产物留在数据目录</strong></td>
+            <td class="mono">pdb/*.WRONG_peptide.bak</td>
+            <td style="white-space:normal">命名说明它曾污染过一次结果；迟早被 glob 捡走</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="sev sev-p2">保留</span> 做得好的地方</h2>
+    <p class="lede">这些不是客套——是重构时应当保住的判断。</p>
+    <div class="good">
+      <div class="item">
+        <div class="h">rim 降级为软分，是真正的手术级判断</div>
+        <p class="b">
+          校准数据证明 5/5 阳性宏环都过不了 <code>D122∧K124∧R125</code>：7OUN 只接触 D122、
+          8ALX 只接触 R125、6PV9 与 5O4Y 三者皆无。把 rim 降为软分 + 配额，
+          避免了"门控把已知活性分子全部杀掉"这一该类项目最常见的死法。有晶体学证据支撑。
+        </p>
+      </div>
+      <div class="item">
+        <div class="h">uv / Docker 的分层边界划得准</div>
+        <p class="b">
+          轻依赖走 uv，torch / JAX 永不进 venv；<code>forbid_system_python</code> 在 README、
+          roadmap、design_spec 三处一致声明。多数 AIDD 项目的环境腐坏都源于没划这条线。
+        </p>
+      </div>
+      <div class="item">
+        <div class="h">资产自包含与溯源是完整的</div>
+        <p class="b">
+          <code>models/SOURCES.md</code> + <code>.colabdesign_pin</code> + 幂等的
+          <code>bootstrap_local_assets.sh</code>，摆脱 sibling 路径依赖。比绝大多数科研仓库做得好。
+        </p>
+      </div>
+      <div class="item">
+        <div class="h">镜像 pin 带理由</div>
+        <p class="b">
+          jax 卡 <code>0.4.30</code> 因为 dm-haiku ≥0.0.17 需要已被 jax ≥0.5 移除的
+          <code>jax.interpreters.xla.xe</code>；numpy 卡 &lt;2；ColabDesign 用
+          <code>--no-deps</code> 再单点装 jax。权重不进镜像、运行时挂载——都对。
+        </p>
+      </div>
+      <div class="item">
+        <div class="h">S0 的科学判断是清醒的</div>
+        <p class="b">
+          显式声明"外表位优先、不追通透性"、显式回避 BMS 专利空间、轨道 B 降级为内部对标——
+          没有把两个目标混成一个打分函数。
+        </p>
+      </div>
+      <div class="item">
+        <div class="h">"先校准再大规模生成"的顺序正确</div>
+        <p class="b">
+          在花 GPU 跑 10k 之前先用力学对照定阈值，S1 门控里还写了
+          "阳性被默认门控杀光则降 T"的人工兜底。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="sev sev-p0">顺序</span> 修复优先级</h2>
+    <p class="lede">
+      第 1–2 条做完之前，<strong>S3（10k 主生成）不应启动</strong>——
+      否则会用错误的门控筛掉一整轮 GPU 预算，而且筛掉的是好设计。
+    </p>
+    <ol class="fixes">
+      <li><span class="n">01</span><div><div class="t">编号归一 + 不变量断言</div><div class="d">P0，阻断一切。序列锚定，不补硬编码偏移。</div></div></li>
+      <li><span class="n">02</span><div><div class="t">新增 <code>pdl1_selftest_metrics.py</code></div><div class="d">晶体经 <code>score_complex()</code> 复现校准值——防复发。</div></div></li>
+      <li><span class="n">03</span><div><div class="t"><code>git init</code> 并提交当前状态</div><div class="d">再开始改；否则这次评估本身也无法固化。</div></div></li>
+      <li><span class="n">04</span><div><div class="t">收紧 smoke_score 的 DoD</div><div class="d">从"非空"改为"晶体自检通过 + 至少 N 条数值合理"。</div></div></li>
+      <li><span class="n">05</span><div><div class="t">join <code>plddt / ptm / i_ptm</code> 进指标表</div><div class="d">数据已在 <code>afcyc_summary.json</code>，接上后 <code>pass_struct</code> 才开始有效。</div></div></li>
+      <li><span class="n">06</span><div><div class="t">换长度无关的多样性度量</div><div class="d"><code>rmsd_vs_8alx</code> 退役或改名为"等长专用"。</div></div></li>
+      <li><span class="n">07</span><div><div class="t">补真负例集，重校 <code>T_pd1_jaccard</code></div><div class="d">打乱序列 + 非 PD-1 面结合肽。</div></div></li>
+      <li><span class="n">08</span><div><div class="t">杂项清理</div><div class="d">读 <code>pred_chain_map</code>；删绝对路径；清 <code>.bak</code>。</div></div></li>
+    </ol>
+  </section>
+
+  <section>
+    <h2><span class="sev sev-p2">附录</span> 修正后的完整指标</h2>
+    <p class="lede">
+      全部 16 条 S2 冒烟结构，编号归一后的指标。现状列即 <code>smoke_metrics.csv</code> 中记录的值。
+    </p>
+    <div class="tbox">
+      <table>
+        <caption>16 条 S2 冒烟结构 · 修正前后对照 · T_pd1_jaccard = 0.15</caption>
+        <thead>
+          <tr>
+            <th>design</th>
+            <th class="num">现状</th>
+            <th class="num">修正后</th>
+            <th class="num">D122</th>
+            <th class="num">K124</th>
+            <th class="num">R125</th>
+            <th class="num">rim_score</th>
+            <th>P0</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="mono">cyc_0_sample1</td><td class="num zero">0.0000</td><td class="num">0.4167</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0.000</td><td class="pass">PASS</td></tr>
+          <tr><td class="mono">cyc_0_sample2</td><td class="num zero">0.0000</td><td class="num">0.4400</td><td class="num">1</td><td class="num">0</td><td class="num">0</td><td class="num">0.016</td><td class="pass">PASS</td></tr>
+          <tr><td class="mono">cyc_1_sample1</td><td class="num zero">0.0000</td><td class="num">0.3636</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0.000</td><td class="pass">PASS</td></tr>
+          <tr><td class="mono">cyc_1_sample2</td><td class="num zero">0.0000</td><td class="num">0.4500</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0.000</td><td class="pass">PASS</td></tr>
+          <tr><td class="mono">cyc_2_sample1</td><td class="num">0.0400</td><td class="num">0.3000</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0.000</td><td class="pass">PASS</td></tr>
+          <tr><td class="mono">cyc_2_sample2</td><td class="num">0.0357</td><td class="num">0.3810</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0.000</td><td class="pass">PASS</td></tr>
+          <tr><td class="mono">cyc_3_sample1</td><td class="num zero">0.0000</td><td class="num">0.4737</td><td class="num">3</td><td class="num">0</td><td class="num">0</td><td class="num">0.047</td><td class="pass">PASS</td></tr>
+          <tr><td class="mono">cyc_3_sample2</td><td class="num zero">0.0000</td><td class="num">0.5000</td><td class="num">4</td><td class="num">0</td><td class="num">0</td><td class="num">0.062</td><td class="pass">PASS</td></tr>
+          <tr><td class="mono">cyc_4_sample1</td><td class="num zero">0.0000</td><td class="num">0.3333</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0.000</td><td class="pass">PASS</td></tr>
+          <tr><td class="mono">cyc_4_sample2</td><td class="num zero">0.0000</td><td class="num">0.4286</td><td class="num">3</td><td class="num">0</td><td class="num">0</td><td class="num">0.047</td><td class="pass">PASS</td></tr>
+          <tr><td class="mono">cyc_5_sample1</td><td class="num zero">0.0000</td><td class="num">0.5000</td><td class="num">9</td><td class="num">0</td><td class="num">0</td><td class="num">0.141</td><td class="pass">PASS</td></tr>
+          <tr><td class="mono">cyc_5_sample2</td><td class="num zero">0.0000</td><td class="num">0.4500</td><td class="num">5</td><td class="num">0</td><td class="num">0</td><td class="num">0.078</td><td class="pass">PASS</td></tr>
+          <tr><td class="mono">cyc_6_sample1</td><td class="num zero">0.0000</td><td class="num">0.4348</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0.000</td><td class="pass">PASS</td></tr>
+          <tr><td class="mono">cyc_6_sample2</td><td class="num zero">0.0000</td><td class="num">0.5238</td><td class="num">1</td><td class="num">0</td><td class="num">0</td><td class="num">0.016</td><td class="pass">PASS</td></tr>
+          <tr><td class="mono">cyc_7_sample1</td><td class="num zero">0.0000</td><td class="num">0.4500</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0.000</td><td class="pass">PASS</td></tr>
+          <tr><td class="mono">cyc_7_sample2</td><td class="num zero">0.0000</td><td class="num">0.4500</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0.000</td><td class="pass">PASS</td></tr>
+        </tbody>
+        <tfoot>
+          <tr><td>合计 16 条</td><td class="num">0 / 16</td><td class="num">16 / 16</td><td class="num" colspan="3">7 条 rim 非零</td><td class="num">max 0.141</td><td>—</td></tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <div class="tbox">
+      <table>
+        <caption>晶体阳性基线（UniProt 编号，S1c 校准值）</caption>
+        <thead>
+          <tr><th>晶体 · 配体</th><th class="num">jaccard</th><th class="num">D122</th><th class="num">K124</th><th class="num">R125</th><th class="num">rim_score</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="mono">7OUN_peptide104</td><td class="num">0.6667</td><td class="num">12</td><td class="num">3</td><td class="num">0</td><td class="num">0.2437</td></tr>
+          <tr><td class="mono">5O45_peptide57</td><td class="num">0.4583</td><td class="num">9</td><td class="num">0</td><td class="num">0</td><td class="num">0.1406</td></tr>
+          <tr><td class="mono">8ALX_pAC65</td><td class="num">0.4400</td><td class="num">0</td><td class="num">0</td><td class="num">11</td><td class="num">0.1719</td></tr>
+          <tr><td class="mono">6PV9_macro</td><td class="num">0.3750</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0.0000</td></tr>
+          <tr><td class="mono">5O4Y_peptide71_BD</td><td class="num">0.2917</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0.0000</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="lede">
+      修正后的冒烟 rim_score 上限 0.141，与晶体基线的 0.141–0.244 处于同一量级——
+      修复前该列全为 0.000，完全不可比。另注意 K124 在全部 5 个晶体阳性中
+      <strong>无一接触</strong>，这正是"K124 gap"作为差异化机会的依据，
+      也再次印证 <code>forbid_require_all_three</code> 是正确的。
+    </p>
+  </section>
+
+  <footer>
+    cycpeptides · PD-L1 大环肽干实验 · S0–S2 结构审计<br>
+    核查基于 results/PDL1/ 实际产物与 scripts/ 源码；修正值经序列对齐验证（117/117 残基一致）。<br>
+    未经独立复核的数字不应直接用于 S3 决策。
+  </footer>
+
+</div>
+
+</body>
+</html>

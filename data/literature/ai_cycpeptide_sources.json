@@ -1,0 +1,55 @@
+{
+  "accessed": "2026-09-22",
+  "topic": "AI cyclic peptide dry-lab design pipeline & tech stack",
+  "project_note": "Method evidence for in-silico pipeline selection; experimental validation in cited papers is not a deliverable of this repo.",
+  "primary_sources": [
+    {
+      "title": "Accurate de novo design of high-affinity protein-binding macrocycles using deep learning (RFpeptides)",
+      "doi": "10.1038/s41589-025-01929-w",
+      "year": 2025,
+      "key": "RFdiffusion cyclic + ProteinMPNN + AfCycDesign/RF2; experimental nM binders"
+    },
+    {
+      "title": "Cyclic peptide structure prediction and design using AlphaFold2 (AfCycDesign)",
+      "doi": "10.1038/s41467-025-59940-7",
+      "year": 2025,
+      "key": "AF2 cyclic offset; prediction, redesign, hallucination; X-ray RMSD <1A"
+    },
+    {
+      "title": "CycleDesigner: CycRFdiffusion + HighFold",
+      "doi": "10.1021/acs.jcim.5c00227",
+      "year": 2025,
+      "key": "Open workflow: CycRFdiffusion + ProteinMPNN + HighFold + filters"
+    },
+    {
+      "title": "HighFold: cyclic peptide & complex structure prediction",
+      "doi": "10.1093/bib/bbae215",
+      "year": 2024,
+      "key": "Head-to-tail + disulfide CycPOEM on AF2/AF-Multimer"
+    },
+    {
+      "title": "CycPeptMP: membrane permeability prediction",
+      "doi": "10.1093/bib/bbae417",
+      "year": 2024,
+      "key": "Multi-level features; MAE~0.355; CycPeptMPDB"
+    },
+    {
+      "title": "CPSet docking benchmark (10 programs)",
+      "doi": "10.1021/acs.jcim.3c01921",
+      "year": 2024,
+      "key": "Rosetta scoring best; ADCP for flexible cyclic sampling"
+    },
+    {
+      "title": "CyclicBoltz1 (AF3/Boltz for cyclic + ncAA)",
+      "doi": "10.1101/2025.02.11.637752",
+      "year": 2025,
+      "key": "AF3-style cyclic + ncAA structure prediction"
+    },
+    {
+      "title": "AlphaFold3 for noncanonical cyclic peptides benchmark",
+      "doi": "10.1021/acs.jcim.5c01393",
+      "year": 2025,
+      "key": "AF3 ncAA cyclic guidelines; D-peptide caveats elsewhere"
+    }
+  ]
+}

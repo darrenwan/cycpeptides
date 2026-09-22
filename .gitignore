@@ -1,0 +1,38 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+build/
+.python-version
+
+# Editor / OS noise
+.cursor/
+.claude/
+.DS_Store
+*.swp
+*~
+
+# Local mis-cuts / backups (do not treat as inputs of record)
+*.bak
+*WRONG*
+
+# Large campaign-local weights (keep on disk; bootstrap via scripts/bootstrap_local_assets.sh)
+models/rfdiffusion/*.pt
+models/afcyc/params/
+models/afcyc/*.tar
+models/academic/*.whl
+third_party/ProteinMPNN/vanilla_model_weights/*.pt
+# Prefetched for Docker build (scripts/fetch_colabdesign.sh); pin recorded in .colabdesign_pin
+third_party/ColabDesign/
+
+# Smoke / funnel binaries & logs (re-run smoke scripts; keep reports/metrics JSON/CSV/MD)
+results/PDL1/smoke/**/traj/
+results/PDL1/smoke/logs/
+results/PDL1/smoke/**/*.pdb
+results/PDL1/smoke/**/*.trb
+results/PDL1/smoke/**/*.fa
+results/PDL1/smoke/**/*.log
+results/PDL1/filter_calibration/decoy_*.pdb

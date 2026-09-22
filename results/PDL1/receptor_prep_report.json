@@ -1,0 +1,84 @@
+{
+  "accessed": "2026-09-22",
+  "source": "data/targets/PDL1/pdb/PDL1_IgV_5O45_chainA.pdb",
+  "output": "data/targets/PDL1/pdb/PDL1_IgV_5O45_A18-134.pdb",
+  "contig": "A18-134",
+  "source_residue_range": [
+    17,
+    145
+  ],
+  "removed": [
+    17,
+    135,
+    136,
+    137,
+    138,
+    139,
+    140,
+    141,
+    142,
+    143,
+    144,
+    145
+  ],
+  "validation": {
+    "n_residues": 117,
+    "range": [
+      18,
+      134
+    ],
+    "contig_match": true,
+    "missing_in_contig_span": [],
+    "hotspot_ok": {
+      "56": {
+        "present": true,
+        "aa": "TYR",
+        "ok": true
+      },
+      "66": {
+        "present": true,
+        "aa": "GLN",
+        "ok": true
+      },
+      "113": {
+        "present": true,
+        "aa": "ARG",
+        "ok": true
+      },
+      "115": {
+        "present": true,
+        "aa": "MET",
+        "ok": true
+      },
+      "121": {
+        "present": true,
+        "aa": "ALA",
+        "ok": true
+      },
+      "123": {
+        "present": true,
+        "aa": "TYR",
+        "ok": true
+      },
+      "122": {
+        "present": true,
+        "aa": "ASP",
+        "ok": true
+      },
+      "124": {
+        "present": true,
+        "aa": "LYS",
+        "ok": true
+      },
+      "125": {
+        "present": true,
+        "aa": "ARG",
+        "ok": true
+      }
+    },
+    "hotspot_missing": [],
+    "aa_mismatch": [],
+    "pass": true
+  },
+  "hotspots_json": "data/targets/PDL1/hotspots.json"
+}
